@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthorizationComponent } from '../authorization/authorization.component';
 
 @Component({
   selector: 'app-registration',
