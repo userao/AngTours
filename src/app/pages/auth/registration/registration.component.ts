@@ -1,10 +1,21 @@
-import { Component } from '@angular/core';
-import { AuthorizationComponent } from '../authorization/authorization.component';
+import { NgClass } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'app-registration',
-  imports: [],
-  templateUrl: './registration.component.html',
-  styleUrl: './registration.component.scss',
+  selector: "app-registration",
+  imports: [NgClass, MatButtonModule, FormsModule],
+  templateUrl: "./registration.component.html",
+  styleUrl: "./registration.component.scss",
 })
-export class RegistrationComponent { }
+export class RegistrationComponent {
+  login: string = "";
+  password: string = "";
+  passwordRepeat: string = "";
+  email: string = "";
+
+  onRegistration(e: Event): void {
+    console.log("e", e);
+  }
+}
