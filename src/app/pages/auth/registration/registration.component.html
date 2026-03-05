@@ -1,42 +1,59 @@
-<div class="d-flex flex-column mt-3">
+<div [hidden]="!submitted"> 
+    <p>Пользователь зарегистрирован</p>
     <p>Ваш логин: {{ login }}</p>
-    <div>
-        <input
-            placeholder="Логин"
-            [ngClass]="{ 'input-error': login.length < 3 }"
-            [(ngModel)]="login"
-        />
-    </div>
-    <div class="mt-3">
-        <input placeholder="Почта" type="email" [(ngModel)]="email" />
-    </div>
-    <div class="mt-3">
-        <input
-            placeholder="Пароль"
-            type="password"
-            [ngClass]="{ 'input-error': password.length < 6 }"
-            [(ngModel)]="password"
-        />
-    </div>
-    <div class="mt-3">
-        <input
-            placeholder="Повтор пароля"
-            type="password"
-            [ngClass]="{ 'input-error': passwordRepeat !== password }"
-            [(ngModel)]="passwordRepeat"
-        />
-    </div>
 </div>
-<div class="mt-3 d-flex justify-content-center">
-    <button
-        mat-flat-button
-        (click)="onRegistration($event)"
-        [disabled]="
-            login.length < 3 ||
-            password.length < 6 ||
-            password !== passwordRepeat
-        "
-    >
-        Зарегистрироваться
-    </button>
-</div>
+<form (ngSubmit)="onSubmit()" [hidden]="submitted">
+    <div class="d-flex flex-column mt-3">
+        <div>
+            <input
+                name="login"
+                placeholder="Логин"
+                class="form-input"
+                [ngClass]="{ 'input-error': login.length < 3 }"
+                [(ngModel)]="login"
+            />
+        </div>
+        <div class="mt-3">
+            <input
+                name="email"
+                placeholder="Почта"
+                type="email"
+                [(ngModel)]="email"
+                class="form-input"
+            />
+        </div>
+        <div class="mt-3">
+            <input
+                name="password"
+                placeholder="Пароль"
+                type="password"
+                class="form-input"
+                [ngClass]="{ 'input-error': password.length < 6 }"
+                [(ngModel)]="password"
+            />
+        </div>
+        <div class="mt-3">
+            <input
+                name="passwordRepeat"
+                placeholder="Повтор пароля"
+                type="password"
+                class="form-input"
+                [ngClass]="{ 'input-error': passwordRepeat !== password }"
+                [(ngModel)]="passwordRepeat"
+            />
+        </div>
+    </div>
+    <div class="mt-3 d-flex justify-content-center">
+        <button
+            mat-flat-button
+            type="submit"
+            [disabled]="
+                login.length < 3 ||
+                password.length < 6 ||
+                password !== passwordRepeat
+            "
+        >
+            Зарегистрироваться
+        </button>
+    </div>
+</form>
