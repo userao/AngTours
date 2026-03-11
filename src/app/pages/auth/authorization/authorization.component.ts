@@ -1,5 +1,5 @@
 import { NgClass } from "@angular/common";
-import { Component, inject } from "@angular/core";
+import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import {
     FormControl,
@@ -10,6 +10,7 @@ import {
 import { MatButtonModule } from "@angular/material/button";
 import { FormErr, FormErrMsg } from "../../../models/types";
 import { UserService } from "../../../services/user.service";
+import { UserApiService } from "../../../services/api/user-api.service";
 
 @Component({
     selector: "app-authorization",
@@ -17,8 +18,9 @@ import { UserService } from "../../../services/user.service";
     templateUrl: "./authorization.component.html",
     styleUrl: "./authorization.component.scss",
 })
-export class AuthorizationComponent {
+export class AuthorizationComponent implements OnInit, OnDestroy {
     private userService = inject(UserService);
+    private userApiService = inject(UserApiService);
     authorizationForm: FormGroup = new FormGroup({
         login: new FormControl("", [
             Validators.required,
@@ -33,9 +35,7 @@ export class AuthorizationComponent {
 
     submitted: boolean = false;
 
-    constructor(private userService2: UserService) {
-
-    }
+    constructor(private userService2: UserService) {}
 
     get saveInStore() {
         return this.authorizationForm.get("saveInStore");
@@ -48,16 +48,28 @@ export class AuthorizationComponent {
         return this.authorizationForm.get("password");
     }
 
+    ngOnInit(): void {
+        console.log("authorization init");
+    }
+
+    ngOnDestroy(): void {
+        console.log("authorization destroy");
+    }
+
     onSubmit(): void {
         // const registredUser = JSON.parse(localStorage.getItem("user"));
 
         const user = { login: this.login.value, password: this.password.value };
-
-        if (this.saveInStore.value) {
-            this.userService.saveUserInStore(user);
-        } else {
-            this.userService.setUser(user);
-        }
+        this.userApiService.auth(user).subscribe(
+            () => {
+                if (this.saveInStore.value) {
+                    this.userService.saveUserInStore(user);
+                } else {
+                    this.userService.setUser(user);
+                }
+            },
+            (err) => {},
+        );
 
         // const err: FormErr = {
         //     notRegistred:
