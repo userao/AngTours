@@ -1,6 +1,7 @@
 import { NgClass } from "@angular/common";
 import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatSnackBar} from "@angular/material/snack-bar";
 import {
     FormControl,
     FormGroup,
@@ -8,17 +9,23 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
-import { FormErr, FormErrMsg } from "../../../models/types";
+import { FormErr, FormErrMsg, User } from "../../../models/types";
 import { UserService } from "../../../services/user.service";
 import { UserApiService } from "../../../services/api/user-api.service";
 
 @Component({
     selector: "app-authorization",
-    imports: [ReactiveFormsModule, NgClass, MatButtonModule, MatCheckboxModule],
+    imports: [
+        ReactiveFormsModule,
+        NgClass,
+        MatButtonModule,
+        MatCheckboxModule,
+    ],
     templateUrl: "./authorization.component.html",
     styleUrl: "./authorization.component.scss",
 })
 export class AuthorizationComponent implements OnInit, OnDestroy {
+    private snackBar = inject(MatSnackBar)
     private userService = inject(UserService);
     private userApiService = inject(UserApiService);
     authorizationForm: FormGroup = new FormGroup({
@@ -57,9 +64,10 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(): void {
-        // const registredUser = JSON.parse(localStorage.getItem("user"));
-
-        const user = { login: this.login.value, password: this.password.value };
+        const user: User = {
+            login: this.login.value,
+            password: this.password.value,
+        };
         this.userApiService.auth(user).subscribe(
             () => {
                 if (this.saveInStore.value) {
@@ -67,27 +75,13 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
                 } else {
                     this.userService.setUser(user);
                 }
+                this.submitted = true;
             },
-            (err) => {},
+            (err) => {
+                this.snackBar.open("Ошибка авторизации", "Закрыть");
+                throw new Error(err.message);
+            },
         );
 
-        // const err: FormErr = {
-        //     notRegistred:
-        //         !registredUser || registredUser.login !== this.login.value,
-        //     invalidPass: registredUser.password !== this.password.value,
-        // };
-        // const errMsg: FormErrMsg = {
-        //     notRegistred: "Такой пользователь не зарегистрирован",
-        //     invalidPass: "Неверный пароль",
-        // };
-
-        // for (let key in err) {
-        //     if (err[key] === true) {
-        //         alert(errMsg[key]);
-        //         return;
-        //     }
-        // }
-
-        this.submitted = true;
     }
 }
