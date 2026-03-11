@@ -1,7 +1,12 @@
-export interface FormErr {
+export type FormErr = {
     [key: string]: boolean;
 }
 
-export interface FormErrMsg {
+export type FormErrMsg = {
     [key: string]: string;
+}
+
+export type User = {
+    login: string;
+    password: string;
 }
