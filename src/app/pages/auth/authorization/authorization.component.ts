@@ -9,7 +9,7 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
-import { FormErr, FormErrMsg, User } from "../../../models/types";
+import { User } from "../../../models/types";
 import { UserService } from "../../../services/user.service";
 import { UserApiService } from "../../../services/api/user-api.service";
 
@@ -42,7 +42,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 
     submitted: boolean = false;
 
-    constructor(private userService2: UserService) {}
+    constructor() {}
 
     get saveInStore() {
         return this.authorizationForm.get("saveInStore");
@@ -71,7 +71,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
         this.userApiService.auth(user).subscribe(
             () => {
                 if (this.saveInStore.value) {
-                    this.userService.saveUserInStore(user);
+                    this.userService.saveLoginInStore(user);
                 } else {
                     this.userService.setUser(user);
                 }

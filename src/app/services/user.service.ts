@@ -9,12 +9,14 @@ export class UserService {
 
     constructor() {}
 
-    saveUserInStore(user: User): void {
+    saveLoginInStore(user: User): void {
         this.setUser(user);
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("user", user.login);
     }
 
-    getUser(): any {}
+    getUser(): User {
+        return this.user;
+    }
 
     setUser(user: User): void {
         this.user = user;
