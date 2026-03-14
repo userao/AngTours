@@ -1,7 +1,7 @@
 import { NgClass } from "@angular/common";
 import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import { MatSnackBar} from "@angular/material/snack-bar";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import {
     FormControl,
     FormGroup,
@@ -12,22 +12,19 @@ import { MatButtonModule } from "@angular/material/button";
 import { User } from "../../../models/types";
 import { UserService } from "../../../services/user.service";
 import { UserApiService } from "../../../services/api/user-api.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "app-authorization",
-    imports: [
-        ReactiveFormsModule,
-        NgClass,
-        MatButtonModule,
-        MatCheckboxModule,
-    ],
+    imports: [ReactiveFormsModule, NgClass, MatButtonModule, MatCheckboxModule],
     templateUrl: "./authorization.component.html",
     styleUrl: "./authorization.component.scss",
 })
 export class AuthorizationComponent implements OnInit, OnDestroy {
-    private snackBar = inject(MatSnackBar)
+    private snackBar = inject(MatSnackBar);
     private userService = inject(UserService);
     private userApiService = inject(UserApiService);
+    private router = inject(Router);
     authorizationForm: FormGroup = new FormGroup({
         login: new FormControl("", [
             Validators.required,
@@ -76,12 +73,12 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
                     this.userService.setUser(user);
                 }
                 this.submitted = true;
+                this.router.navigate(["/"]);
             },
             (err) => {
                 this.snackBar.open("Ошибка авторизации", "Закрыть");
                 throw new Error(err.message);
             },
         );
-
     }
 }

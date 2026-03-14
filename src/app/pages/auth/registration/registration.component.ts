@@ -27,6 +27,7 @@ export class RegistrationComponent {
         this.userApiService.register(user).subscribe(
             () => {
                 this.submitted = true;
+                this.snackBar.open("Пользователь зарегистрирован", "Закрыть");
             },
             (err) => {
                 this.snackBar.open(
