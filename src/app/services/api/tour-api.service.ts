@@ -13,5 +13,6 @@ export class TourApiService {
 
     getTours() {
       return this.http.get(this.api.tours);
+    //   return this.http.get("/mocks/tours.json");
     }
 }
