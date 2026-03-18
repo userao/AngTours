@@ -4,7 +4,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatButtonModule } from "@angular/material/button";
 import { Component, inject } from "@angular/core";
 import { UserApiService } from "../../../services/api/user-api.service";
-import { User } from "../../../models/types";
+import { IRegistrationUser } from "../../../models/user";
 
 @Component({
     selector: "app-registration",
@@ -23,7 +23,7 @@ export class RegistrationComponent {
     submitted: boolean = false;
 
     onSubmit(): void {
-        const user: User = { login: this.login, password: this.password };
+        const user: IRegistrationUser = { login: this.login, password: this.password, email: this.email };
         this.userApiService.register(user).subscribe(
             () => {
                 this.submitted = true;

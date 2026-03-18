@@ -9,7 +9,7 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
-import { User } from "../../../models/types";
+import { IAuthUser } from "../../../models/user";
 import { UserService } from "../../../services/user.service";
 import { UserApiService } from "../../../services/api/user-api.service";
 import { Router } from "@angular/router";
@@ -61,7 +61,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(): void {
-        const user: User = {
+        const user: IAuthUser = {
             login: this.login.value,
             password: this.password.value,
         };
