@@ -1,9 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from "@angular/core";
+import { TourApiService } from "./api/tour-api.service";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: "root",
 })
 export class TourService {
+    private toursApi = inject(TourApiService);
 
-  constructor() { }
+    constructor() {}
+
+    getTours() {
+        return this.toursApi.getTours();
+    }
 }

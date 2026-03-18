@@ -6,10 +6,14 @@ import { UserService } from "../../services/user.service";
     templateUrl: "./header.component.html",
     styleUrl: "./header.component.scss",
 })
-export class HeaderComponent implements OnInit{
-  userService = inject(UserService);
-  userName: string = null;
-  ngOnInit(): void {
-    this.userName = this.userService.getUser().login;
-  }
+export class HeaderComponent implements OnInit {
+    userService = inject(UserService);
+    userName: string = null;
+    ngOnInit(): void {
+        const authUser = this.userService.getUser();
+
+        if (authUser) {
+            this.userName = authUser.login; 
+        }
+    }
 }

@@ -5,7 +5,7 @@ import { IRegistrationUser } from "../models/user";
     providedIn: "root",
 })
 export class UserService {
-    private user: IRegistrationUser;
+    private user: IRegistrationUser = null;
 
     constructor() {}
 
