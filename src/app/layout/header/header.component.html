@@ -1,1 +1,9 @@
-<div class="layout-header">{{userName}}</div>
+<div class="layout-header d-flex justify-content-end">
+    <div class="menu-list d-flex flex-1">
+        <div>
+            <app-menu [items]="menuItems" label="test" />
+        </div>
+    </div>
+    <div>{{date | date:'HH:mm EEEE'}}</div>
+    <div>{{userName}}</div>
+</div>
