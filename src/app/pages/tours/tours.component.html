@@ -1,1 +1,12 @@
-<p>tours works!</p>
+<div class="d-flex flex-wrap">
+    @for (tour of tours; track tour.id) {
+        <div class="tour-item">
+            <p>{{tour.type}}</p>
+            <p>{{tour.date}}</p>
+            <p>{{tour.description}}</p>
+            <div>
+                <img src="/img/{{tour.img}}" />
+            </div>
+        </div>
+    }
+</div>
