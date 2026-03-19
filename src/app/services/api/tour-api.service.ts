@@ -1,6 +1,8 @@
 import { inject, Injectable } from "@angular/core";
 import { API } from "../../shared/api";
 import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { ITour, IToursData } from "../../models/tour";
 
 @Injectable({
     providedIn: "root",
@@ -11,8 +13,8 @@ export class TourApiService {
 
     constructor() {}
 
-    getTours() {
-      return this.http.get(this.api.tours);
+    getTours(): Observable<IToursData> {
+      return this.http.get<IToursData>(this.api.tours);
     //   return this.http.get("/mocks/tours.json");
     }
 }

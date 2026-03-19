@@ -2,17 +2,24 @@ import { Component, inject, OnInit } from "@angular/core";
 import { DatePipe } from "@angular/common";
 import { UserService } from "../../services/user.service";
 import { MenuComponent } from "./menu/menu.component";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { Router } from "@angular/router";
 @Component({
     selector: "app-header",
-    imports: [DatePipe, MenuComponent],
+    imports: [DatePipe, MenuComponent, MatButtonModule, MatIconModule],
     templateUrl: "./header.component.html",
     styleUrl: "./header.component.scss",
 })
 export class HeaderComponent implements OnInit {
-    userService = inject(UserService);
+    private router = inject(Router);
+    private userService = inject(UserService);
     userName: string = null;
     date = new Date();
-    menuItems = [{ route: "auth", title: "авторизация" }];
+    menuItems = [
+        { route: "", title: "главная" },
+        { route: "settings", title: "настройки" },
+    ];
     ngOnInit(): void {
         setInterval(() => {
             this.date = new Date();
@@ -22,6 +29,15 @@ export class HeaderComponent implements OnInit {
 
         if (authUser) {
             this.userName = authUser.login;
+        } else {
+            this.menuItems.push({ route: "auth", title: "Войти" });
         }
+    }
+    handleLogout(): void {
+        this.userService.setUser(null);
+        this.router.navigate(["/auth"]);
+    }
+    handleLogin(): void {
+        this.router.navigate(["/auth"]);
     }
 }

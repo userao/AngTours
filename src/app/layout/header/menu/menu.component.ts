@@ -12,6 +12,5 @@ export class MenuComponent implements OnChanges {
     @Input() items: any[] = [];
     @Input() label: string;
     ngOnChanges(changes: SimpleChanges): void {
-        console.log("chages", changes);
     }
 }

@@ -16,7 +16,7 @@
             "description": "Discover Pearls of France & Italy",
             "tourOperator": "Emerald Waterways",
             "price": "€3,579",
-            "img": "pic1.jpg",
+            "img": "pic1_1.jpg",
             "type": "multi",
             "date": "2022-10-22",
                  "locationId": "1fe2gfg233"
@@ -37,7 +37,7 @@
             "description": "Fantastic tour with a variety of activities and enough chill time. Excellent tour.",
             "tourOperator": "Emerald Waterways",
             "price": "€825",
-            "img": "pic3.jpg",
+            "img": "pic2_4.jpg",
              "locationId": "1fe21233"
         },
         {
@@ -46,7 +46,7 @@
             "description": "Start in Machame Camp and end in Mweka Gate! With the Hiking & Trekking tour Kilimanjaro climbing machame route 7 days, you have a 7 days tour package taking you through Machame Camp, Tanzania and 5 other destinations in Tanzania. Kilimanjaro climbing machame route 7 days includes accommodation, an expert guide, meals, transport and more.",
             "tourOperator": "Bali Bucket List Tours",
             "price": "€761",
-            "img": "pic4.jpg",
+            "img": "pic3.jpg",
             "type": "multi"
         },
         {
@@ -55,7 +55,7 @@
             "description": "Las Vegas, Zion National Park, Bryce Canyon National Park, Antelope Canyon",
             "tourOperator": "BH Lanka Tours",
             "price": "€1200",
-            "img": "pic5.jpg",
+            "img": "pic4.jpg",
             "locationId": "1fe2gfg233"
         },
         {
@@ -64,7 +64,7 @@
             "description": "Canggu, Ubud, Gili Islands, Nusa Lembongan, Nusa Penida, Seminyak",
             "tourOperator": "LocalAdventures",
             "price": "€950",
-            "img": "pic6.jpg",
+            "img": "pic5.jpg",
              "locationId": "1fe21233"
         },
         {
@@ -73,7 +73,7 @@
             "description": "Las Vegas, Zion National Park, Bryce Canyon National Park, Antelope Canyon",
             "tourOperator": "Emerald Waterways",
             "price": "€1200",
-            "img": "pic7.jpg",
+            "img": "pic6.jpg",
             "type": "single",
              "locationId": "1fe2gfg233"
         },
@@ -83,7 +83,7 @@
             "description": "Negombo, Anuradhapura, Dambulla, Sigiriya, Polonnaruwa, Mahiyanganaya, Kandy",
             "tourOperator": "LocalAdventures",
             "price": "€680",
-            "img": "pic8.jpg",
+            "img": "pic7.jpg",
              "locationId": "1fe323"
         },
         {
@@ -92,7 +92,7 @@
             "description": "Cusco, Sacred Valley, Ollantaytambo, Aguas Calientes, Machu Picchu, Pisac, Puno",
             "tourOperator": "Emerald Waterways",
             "price": "€1,279",
-            "img": "pic9.jpg",
+            "img": "pic8.jpg",
              "locationId": "1fe21233"
         },
         {
