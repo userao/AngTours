@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from "@angular/core";
 import {MatCardModule} from '@angular/material/card';
 import { TourService } from "../../services/tour.service";
 import { ITour, IToursData } from "../../models/tour";
+import { TourCardComponent } from "./tour-card/tour-card.component";
 
 @Component({
     selector: "app-tours",
-    imports: [MatCardModule],
+    imports: [MatCardModule, TourCardComponent],
     templateUrl: "./tours.component.html",
     styleUrl: "./tours.component.scss",
 })

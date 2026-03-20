@@ -1,0 +1,14 @@
+<mat-card class="tour-item" appearance="outlined">
+    <mat-card-header>
+        <mat-card-title>{{ tour.name }}</mat-card-title>
+        <mat-card-subtitle>{{ tour.tourOperator }}</mat-card-subtitle>
+    </mat-card-header>
+    <div class="tour-image p-3">
+        <img src="/img/{{ tour.img }}" />
+    </div>
+    <mat-card-content>
+        <p>
+            {{ tour.description }}
+        </p>
+    </mat-card-content>
+</mat-card>
