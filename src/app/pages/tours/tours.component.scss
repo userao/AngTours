@@ -1,3 +1,17 @@
-.tour-item {
-    flex-basis: 49%;
+.tours-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+@media (max-width: 1199.98px) {
+    .tours-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 991.92px) {
+    .tours-wrapper {
+        grid-template-columns: 1fr;
+    }
 }
