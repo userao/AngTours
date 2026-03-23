@@ -1,14 +1,33 @@
-<mat-card class="tour-item" appearance="outlined">
-    <mat-card-header>
-        <mat-card-title>{{ tour.name }}</mat-card-title>
+<<<<<<< HEAD
+<mat-card appearance="outlined">
+    <div>
+        <mat-card-header>
+            <mat-card-title>{{ tour.name }}</mat-card-title>
+            <mat-card-subtitle>{{ tour.tourOperator }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="/img/{{ tour.img }}" />
+        <mat-card-content class="pb-0">
+            <p>
+                {{ tour.description }}
+            </p>
+        </mat-card-content>
+    </div>
+    <div class="mx-3 my-2">
+        <a mat-button>Подробнее</a>
+    </div>
+=======
+<mat-card class="h-100 d-block" appearance="outlined">
+    <mat-card-header class="d-block">
+        <mat-card-title class="card-title">{{ tour.name }}</mat-card-title>
         <mat-card-subtitle>{{ tour.tourOperator }}</mat-card-subtitle>
     </mat-card-header>
-    <div class="tour-image p-3">
+    <div class="tour-image">
         <img src="/img/{{ tour.img }}" />
     </div>
     <mat-card-content>
-        <p>
+        <p class="card-description">
             {{ tour.description }}
         </p>
     </mat-card-content>
+>>>>>>> 6c1e66b (changed tour cards styling)
 </mat-card>

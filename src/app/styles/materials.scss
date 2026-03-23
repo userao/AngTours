@@ -1,0 +1,24 @@
+mat-card {
+    max-width: 400px;
+    height: 100%;
+    justify-content: space-between;
+    & .mat-mdc-card-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    & .mat-mdc-card-title {
+        max-width: 220px;
+        height: 1lh;
+        text-wrap: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    & .mat-mdc-card-content {
+        max-height: 3lh;
+        overflow: auto;
+        margin-block: 0.5rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--mat-sys-primary) rgb(255 248 248);
+    }
+}

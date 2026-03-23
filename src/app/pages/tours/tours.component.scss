@@ -1,3 +1,30 @@
-.tour-item {
-    flex-basis: 49%;
+.tours-wrapper {
+    display: grid;
+<<<<<<< HEAD
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+}
+
+@media (max-width: 1399.98px) {
+    .tours-wrapper {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+=======
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+>>>>>>> 6c1e66b (changed tour cards styling)
+@media (max-width: 1199.98px) {
+    .tours-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 991.92px) {
+    .tours-wrapper {
+        grid-template-columns: 1fr;
+    }
 }
