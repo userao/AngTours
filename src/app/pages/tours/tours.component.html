@@ -1,7 +1,5 @@
-<div class="d-flex flex-wrap gap-2 align-items-stretch">
+<div class="tours-wrapper">
     @for (tour of tours; track tour.id) {
-        <div class="tour-item">
-            <app-tour-card [tour]="tour" />
-        </div>
+        <app-tour-card [tour]="tour" />
     }
 </div>
