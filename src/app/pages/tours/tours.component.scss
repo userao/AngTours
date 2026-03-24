@@ -1,6 +1,9 @@
 .tours-wrapper {
     display: grid;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 620fb633daf3c29f5a428db348dfcba19f15ed13
     grid-template-columns: repeat(4, 1fr);
     gap: 5px;
 }
@@ -11,12 +14,15 @@
     }
 }
 
+<<<<<<< HEAD
 =======
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;
 }
 
 >>>>>>> 6c1e66b (changed tour cards styling)
+=======
+>>>>>>> 620fb633daf3c29f5a428db348dfcba19f15ed13
 @media (max-width: 1199.98px) {
     .tours-wrapper {
         grid-template-columns: repeat(2, 1fr);
