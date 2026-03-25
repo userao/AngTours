@@ -3,6 +3,7 @@ import {MatCardModule} from '@angular/material/card';
 import { TourService } from "../../services/tour.service";
 import { ITour, IToursData } from "../../models/tour";
 import { TourCardComponent } from "./tour-card/tour-card.component";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "app-tours",

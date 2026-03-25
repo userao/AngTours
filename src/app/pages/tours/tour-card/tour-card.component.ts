@@ -1,7 +1,8 @@
-import { Component, Input } from "@angular/core";
+import { Component, inject, Input } from "@angular/core";
 import { ITour } from "../../../models/tour";
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "app-tour-card",
@@ -10,5 +11,10 @@ import { MatButtonModule } from "@angular/material/button";
     styleUrl: "./tour-card.component.scss",
 })
 export class TourCardComponent {
+    private router = inject(Router);
     @Input() tour: ITour;
+
+    goToTour(): void {
+        this.router.navigate([`tours/${this.tour.id}`]);
+    }
 }

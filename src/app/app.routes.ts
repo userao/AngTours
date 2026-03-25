@@ -8,7 +8,21 @@ export const routes: Routes = [
     {
         path: "",
         component: LayoutComponent,
-        children: [{ path: "", component: ToursComponent }, { path: "settings", component: SettingsComponent}],
+        children: [
+            { path: "", component: ToursComponent },
+            { path: "settings", component: SettingsComponent },
+            {
+                path: "tours/:id",
+                loadComponent: () =>
+                    import("./pages/tours/tour-item/tour-item.component").then(
+                        (c) => c.TourItemComponent,
+                    ),
+            },
+            {
+                path: "**",
+                component: ToursComponent,
+            },
+        ],
     },
     {
         path: "auth",
