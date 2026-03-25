@@ -1,1 +1,13 @@
-<p>tour-item works!</p>
+@if (tour) {
+    <div class="tour__content">
+        <h2 class="tour__name">{{ tour.name }}</h2>
+        <h3 class="tour__operator">{{ tour.tourOperator }}</h3>
+        <p class="tour__description">{{ tour.description }}</p>
+        <p class="tour__date">{{ tour.date | date: "dd MMMM, EEEE YYYY GGGG" }}</p>
+        <p class="tour__price">{{ tour.price }}</p>
+        <a mat-button (click)="handleOrder()">Сформировать заказ</a>
+    </div>
+    <div class="tour__image">
+        <img src="img/{{ tour.img }}" />
+    </div>
+}

@@ -1,0 +1,18 @@
+:host {
+    display: flex;
+}
+
+.tour__content {
+    line-height: 1.5;
+    & .tour__operator {
+        font-size: 1.25rem;
+    }
+}
+
+.tour__image {
+    flex-basis: 50%;
+    flex-shrink: 0;
+    & img {
+        width: 100%;
+    }
+}

@@ -17,4 +17,8 @@ export class TourApiService {
       return this.http.get<IToursData>(this.api.tours);
     //   return this.http.get("/mocks/tours.json");
     }
+
+    getTour(id: string): Observable<ITour> {
+        return this.http.get<ITour>(this.api.tour + id);
+    }
 }

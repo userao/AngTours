@@ -15,6 +15,6 @@ export class TourCardComponent {
     @Input() tour: ITour;
 
     goToTour(): void {
-        this.router.navigate([`tours/${this.tour.id}`]);
+        this.router.navigate([`tour/${this.tour.id}`]);
     }
 }
