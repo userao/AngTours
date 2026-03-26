@@ -25,16 +25,16 @@ export class HeaderComponent implements OnInit {
             this.date = new Date();
         }, 1000);
 
-        const authUser = this.userService.getUser();
+        const username = this.userService.getUsername();
 
-        if (authUser) {
-            this.userName = authUser.login;
+        if (username) {
+            this.userName = username;
         } else {
             this.menuItems.push({ route: "auth", title: "Войти" });
         }
     }
     handleLogout(): void {
-        this.userService.setUser(null);
+        this.userService.logOut();
         this.router.navigate(["/auth"]);
     }
     handleLogin(): void {

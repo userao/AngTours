@@ -68,9 +68,9 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
         this.userApiService.auth(user).subscribe(
             () => {
                 if (this.saveInStore.value) {
-                    this.userService.saveLoginInStore(user);
+                    this.userService.saveUsername(user.login);
                 } else {
-                    this.userService.setUser(user);
+                    this.userService.setUsername(user.login);
                 }
                 this.submitted = true;
                 this.router.navigate(["/"]);

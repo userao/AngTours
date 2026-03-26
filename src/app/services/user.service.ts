@@ -5,20 +5,35 @@ import { IRegistrationUser } from "../models/user";
     providedIn: "root",
 })
 export class UserService {
-    private user: IRegistrationUser = null;
+    private username: string;
 
-    constructor() {}
-
-    saveLoginInStore(user: IRegistrationUser): void {
-        this.setUser(user);
-        localStorage.setItem("user", user.login);
+    constructor() {
+        this.loadUser();
     }
 
-    getUser(): IRegistrationUser {
-        return this.user;
+    loadUser() {
+        const savedUsername = localStorage.getItem("username");
+
+        if (savedUsername) {
+            this.username = savedUsername;
+        }
     }
 
-    setUser(user: IRegistrationUser): void {
-        this.user = user;
+    saveUsername(username: string): void {
+        this.username = username;
+        localStorage.setItem("username", username);
+    }
+
+    getUsername(): string {
+        return this.username;
+    }
+
+    setUsername(username: string): void {
+        this.username = username;
+    }
+
+    logOut() {
+        this.username = null;
+        localStorage.removeItem("username");
     }
 }
