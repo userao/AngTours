@@ -1,0 +1,16 @@
+:host {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+form {
+    width: 250px;
+    & input {
+        margin-bottom: 0.5rem;
+    }
+
+    & button {
+        width: 100%;
+    }
+}
