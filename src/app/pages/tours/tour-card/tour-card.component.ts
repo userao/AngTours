@@ -9,6 +9,9 @@ import { Router } from "@angular/router";
     imports: [MatCardModule, MatButtonModule],
     templateUrl: "./tour-card.component.html",
     styleUrl: "./tour-card.component.scss",
+    host: {
+        '[attr.data-tour-id]': 'tour.id',
+    }
 })
 export class TourCardComponent {
     private router = inject(Router);

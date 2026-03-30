@@ -1,4 +1,4 @@
-<div class="tours-wrapper">
+<div class="tours-wrapper" appHighlightActive selector="app-tour-card" [initFirst]="true" (onEnter)="onEnter($event)">
     @for (tour of tours; track tour.id) {
         <app-tour-card [tour]="tour" />
     }

@@ -2,6 +2,10 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 5px;
+
+    & app-tour-card {
+        box-sizing: content-box;
+    }
 }
 
 @media (max-width: 1399.98px) {
