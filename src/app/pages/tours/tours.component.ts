@@ -5,10 +5,11 @@ import { ITour, IToursData } from "../../models/tour";
 import { TourCardComponent } from "./tour-card/tour-card.component";
 import { HighlightActiveDirective } from "../../shared/directives/highlight-active.directive";
 import { Router } from "@angular/router";
+import { NgIf } from "@angular/common";
 
 @Component({
     selector: "app-tours",
-    imports: [MatCardModule, TourCardComponent, HighlightActiveDirective],
+    imports: [MatCardModule, TourCardComponent, HighlightActiveDirective, NgIf],
     templateUrl: "./tours.component.html",
     styleUrl: "./tours.component.scss",
 })
