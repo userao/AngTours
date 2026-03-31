@@ -3,8 +3,9 @@
         <app-header />
     </header>
     <div class="main-content d-flex flex-grow-1 p-3 overflow-hidden">
-        <div class="overflow-auto flex-grow-1 pe-3">
+        <div class="overflow-auto flex-grow-1 pe-3 position-relative">
             <router-outlet />
+            <app-loader [loaderStatus]="loaderStatus$ | async" />
         </div>
         <app-aside />
     </div>
