@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, inject, NgZone, OnInit } from "@angular/core";
 import { DatePipe } from "@angular/common";
 import { UserService } from "../../services/user.service";
 import { MenuComponent } from "./menu/menu.component";
@@ -14,6 +14,7 @@ import { Router } from "@angular/router";
 export class HeaderComponent implements OnInit {
     private router = inject(Router);
     private userService = inject(UserService);
+    private ngZone = inject(NgZone);
     userName: string = null;
     date = new Date();
     menuItems = [
@@ -21,9 +22,11 @@ export class HeaderComponent implements OnInit {
         { route: "settings", title: "настройки" },
     ];
     ngOnInit(): void {
-        setInterval(() => {
-            this.date = new Date();
-        }, 1000);
+        this.ngZone.runOutsideAngular(() =>
+            setInterval(() => {
+                this.date = new Date();
+            }, 1000),
+        );
 
         const username = this.userService.getUsername();
 
