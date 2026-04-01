@@ -101,9 +101,7 @@ export class HighlightActiveDirective
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        console.log("changes", changes);
-    }
+    ngOnChanges(changes: SimpleChanges): void {}
 
     ngOnInit(): void {}
 }

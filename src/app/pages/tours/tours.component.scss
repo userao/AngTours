@@ -8,6 +8,11 @@
     }
 }
 
+.search-wrapper {
+    width: 400px;
+
+}
+
 @media (max-width: 1399.98px) {
     .tours-wrapper {
         grid-template-columns: repeat(3, 1fr);

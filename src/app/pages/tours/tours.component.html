@@ -1,13 +1,17 @@
+<div class="search-wrapper">
+    <mat-form-field class="w-100">
+        <input matInput placeholder="Поиск..." (input)="searchTours($event)"/>
+    </mat-form-field>
+</div>
 <div
     class="tours-wrapper"
     appHighlightActive
     selector="app-tour-card"
     [initFirst]="true"
     (onEnter)="onEnter($event)"
-    *ngIf="tours?.length > 0"
+    *ngIf="renderedTours?.length > 0"
 >
-    @for (tour of tours; track tour.id) {
+    @for (tour of renderedTours; track tour.id) {
         <app-tour-card [tour]="tour" />
     }
 </div>
-`
