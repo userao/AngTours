@@ -1,8 +1,14 @@
-<div [hidden]="!submitted"> 
-    <p>Пользователь зарегистрирован</p>
-    <p>Ваш логин: {{ login }}</p>
-</div>
-<form (ngSubmit)="onSubmit()" [hidden]="submitted">
+@if (formStatus === "success") {
+    <div>Спасибо за регистрацию, {{ login }}!</div>
+}
+<form
+    (ngSubmit)="onSubmit()"
+    [ngClass]="
+        formStatus === 'submitting' || formStatus === 'success'
+            ? 'opacity-0'
+            : ''
+    "
+>
     <div class="d-flex flex-column mt-3">
         <div>
             <input
@@ -49,10 +55,12 @@
             type="submit"
             [disabled]="
                 login.length < 3 ||
-                password.length < 6 || password !== passwordRepeat 
+                password.length < 6 ||
+                password !== passwordRepeat
             "
         >
             Зарегистрироваться
         </button>
     </div>
 </form>
+<app-loader [loaderStatus]="loaderService.loader$ | async" />

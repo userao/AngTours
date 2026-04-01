@@ -1,4 +1,4 @@
-import { NgClass } from "@angular/common";
+import { AsyncPipe, NgClass } from "@angular/common";
 import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -13,10 +13,12 @@ import { IAuthUser } from "../../../models/user";
 import { UserService } from "../../../services/user.service";
 import { UserApiService } from "../../../services/api/user-api.service";
 import { Router } from "@angular/router";
+import { LoaderComponent } from "../../../shared/components/loader/loader.component";
+import { LoaderService } from "../../../services/loader.service";
 
 @Component({
     selector: "app-authorization",
-    imports: [ReactiveFormsModule, NgClass, MatButtonModule, MatCheckboxModule],
+    imports: [ReactiveFormsModule, NgClass, MatButtonModule, MatCheckboxModule, LoaderComponent, AsyncPipe],
     templateUrl: "./authorization.component.html",
     styleUrl: "./authorization.component.scss",
 })
@@ -25,6 +27,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
     private userService = inject(UserService);
     private userApiService = inject(UserApiService);
     private router = inject(Router);
+    loaderService = inject(LoaderService);
     authorizationForm: FormGroup = new FormGroup({
         login: new FormControl("", [
             Validators.required,
@@ -65,6 +68,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
             login: this.login.value,
             password: this.password.value,
         };
+        this.submitted = true;
         this.userApiService.auth(user).subscribe(
             () => {
                 if (this.saveInStore.value) {
@@ -72,11 +76,12 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
                 } else {
                     this.userService.setUsername(user.login);
                 }
-                this.submitted = true;
+                
                 this.router.navigate(["/"]);
             },
             (err) => {
                 this.snackBar.open("Ошибка авторизации", "Закрыть");
+                this.submitted = false;
                 throw new Error(err.message);
             },
         );

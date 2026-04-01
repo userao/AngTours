@@ -1,8 +1,8 @@
-<div [hidden]="!submitted">Вы вошли под пользователем {{ login?.value }}</div>
+<app-loader [loaderStatus]="loaderService.loader$ | async" />
 <form
     (ngSubmit)="onSubmit()"
     [formGroup]="authorizationForm"
-    [hidden]="submitted"
+    [ngClass]="submitted ? 'opacity-0' : ''"
 >
     <div class="d-flex flex-column mt-3">
         <div>
@@ -27,7 +27,12 @@
         </div>
     </div>
     <div class="mt-3">
-        <mat-checkbox [disableRipple]="true" formControlName="saveInStore" class="">Сохранить пользователя в хранилище</mat-checkbox>
+        <mat-checkbox
+            [disableRipple]="true"
+            formControlName="saveInStore"
+            class=""
+            >Сохранить пользователя в хранилище</mat-checkbox
+        >
     </div>
     <div class="mt-3 d-flex justify-content-center">
         <button
