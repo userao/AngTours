@@ -22,3 +22,13 @@ mat-card {
         scrollbar-color: var(--mat-sys-primary) rgb(255 248 248);
     }
 }
+
+.search-wrapper {
+    & .mat-mdc-text-field-wrapper {
+        opacity: 0.6;
+    }
+
+    & .mat-mdc-text-field-wrapper:has(input:focus) {
+        opacity: 0.95;
+    }
+}

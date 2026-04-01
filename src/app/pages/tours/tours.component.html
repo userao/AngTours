@@ -1,4 +1,4 @@
-<div class="search-wrapper">
+<div class="search-wrapper position-fixed z-3">
     <mat-form-field class="w-100">
         <input matInput placeholder="Поиск..." (input)="searchTours($event)"/>
     </mat-form-field>
@@ -9,8 +9,11 @@
     selector="app-tour-card"
     [initFirst]="true"
     (onEnter)="onEnter($event)"
-    *ngIf="renderedTours?.length > 0"
+    *ngIf="allTours?.length"
 >
+    @if(!renderedTours.length) {
+        <p>Туры не найдены</p>
+    }
     @for (tour of renderedTours; track tour.id) {
         <app-tour-card [tour]="tour" />
     }
