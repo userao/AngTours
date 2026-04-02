@@ -32,25 +32,30 @@ export class HighlightActiveDirective
 
     constructor(private el: ElementRef) {}
 
+    initItems(): void {
+        this.items = this.el
+            ? Array.from(
+                  (this.el.nativeElement as HTMLElement).querySelectorAll(
+                      this.selector,
+                  ),
+              )
+            : null;
+
+        this.items.forEach(el => el.classList.remove('active'));
+        
+
+        if (this.sort) {
+            this.items.sort(this.sort);
+        }
+
+        if (this.initFirst && this.items?.length) {
+            this.changeIndex(0);
+        }
+    }
+
     ngAfterViewInit(): void {
         setTimeout(() => {
-            this.items = this.el
-                ? Array.from(
-                      (this.el.nativeElement as HTMLElement).querySelectorAll(
-                          this.selector,
-                      ),
-                  )
-                : null;
-
-            if (this.sort) {
-                this.items.sort(this.sort);
-            }
-
-            if (this.initFirst && this.items?.length) {
-                this.changeIndex(0);
-            }
-
-            console.log("items", this.items);
+            this.initItems();
         }, 200);
     }
 

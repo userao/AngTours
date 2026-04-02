@@ -1,7 +1,13 @@
-import { Component, inject, OnInit } from "@angular/core";
+import {
+    AfterViewInit,
+    Component,
+    inject,
+    OnInit,
+    ViewChild,
+} from "@angular/core";
 import { MatCardModule } from "@angular/material/card";
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from "@angular/material/input";
+import { MatFormFieldModule } from "@angular/material/form-field";
 import { TourService } from "../../services/tour.service";
 import { ITour, IToursData } from "../../models/tour";
 import { TourCardComponent } from "./tour-card/tour-card.component";
@@ -11,13 +17,22 @@ import { NgIf } from "@angular/common";
 
 @Component({
     selector: "app-tours",
-    imports: [MatCardModule, TourCardComponent, HighlightActiveDirective, NgIf, MatFormFieldModule, MatInputModule],
+    imports: [
+        MatCardModule,
+        TourCardComponent,
+        HighlightActiveDirective,
+        NgIf,
+        MatFormFieldModule,
+        MatInputModule,
+    ],
     templateUrl: "./tours.component.html",
     styleUrl: "./tours.component.scss",
 })
-export class ToursComponent implements OnInit {
+export class ToursComponent implements OnInit, AfterViewInit {
     private tourService = inject(TourService);
     private router = inject(Router);
+    @ViewChild(HighlightActiveDirective)
+    higlightActiveDirective: HighlightActiveDirective;
     allTours: ITour[];
     renderedTours: ITour[];
     ngOnInit(): void {
@@ -27,15 +42,25 @@ export class ToursComponent implements OnInit {
         });
     }
 
+    ngAfterViewInit(): void {}
+
     searchTours(e: Event): void {
-        const searchValue  = ( e.target as HTMLInputElement ).value.trim();
-        const regexp = new RegExp(searchValue, 'i');
+        const searchValue = (e.target as HTMLInputElement).value.trim();
+        const regexp = new RegExp(searchValue, "i");
 
         if (!searchValue) {
             this.renderedTours = [...this.allTours];
         } else {
-            this.renderedTours = this.allTours.filter((tour) => regexp.test(tour.name));
+            this.renderedTours = this.allTours.filter((tour) =>
+                regexp.test(tour.name),
+            );
         }
+
+        this.updateView();
+    }
+
+    updateView(): void {
+        setTimeout(() => this.higlightActiveDirective.initItems());
     }
 
     onEnter(e: { el: HTMLElement; index: number }): void {
