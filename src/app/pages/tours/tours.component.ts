@@ -1,6 +1,7 @@
 import {
     AfterViewInit,
     Component,
+    ElementRef,
     inject,
     OnInit,
     ViewChild,
@@ -14,6 +15,7 @@ import { TourCardComponent } from "./tour-card/tour-card.component";
 import { HighlightActiveDirective } from "../../shared/directives/highlight-active.directive";
 import { Router } from "@angular/router";
 import { NgIf } from "@angular/common";
+import { debounceTime, fromEvent } from "rxjs";
 
 @Component({
     selector: "app-tours",
@@ -31,8 +33,12 @@ import { NgIf } from "@angular/common";
 export class ToursComponent implements OnInit, AfterViewInit {
     private tourService = inject(TourService);
     private router = inject(Router);
+
     @ViewChild(HighlightActiveDirective)
     higlightActiveDirective: HighlightActiveDirective;
+    @ViewChild("inputSearch")
+    inputSearch: ElementRef;
+
     allTours: ITour[];
     renderedTours: ITour[];
     ngOnInit(): void {
@@ -42,9 +48,15 @@ export class ToursComponent implements OnInit, AfterViewInit {
         });
     }
 
-    ngAfterViewInit(): void {}
+    ngAfterViewInit(): void {
+        fromEvent<InputEvent>(this.inputSearch.nativeElement, "input")
+            .pipe(debounceTime(300))
+            .subscribe((inputEv) => {
+                this.searchTours(inputEv);
+            });
+    }
 
-    searchTours(e: Event): void {
+    searchTours(e: InputEvent): void {
         const searchValue = (e.target as HTMLInputElement).value.trim();
         const regexp = new RegExp(searchValue, "i");
 
