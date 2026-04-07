@@ -1,12 +1,25 @@
 <div class="aside m-3 h-100">
-    <mat-form-field>
+    <mat-form-field class="w-100">
         <mat-label>Выберите тип тура</mat-label>
-        <mat-select [(value)]="selectedType" (selectionChange)="changeTourType($event)">
+        <mat-select
+            [(value)]="selectedType"
+            (selectionChange)="changeTourType($event)"
+        >
             @for (type of tourTypes; track type.key) {
                 <mat-option [value]="type.key" default>{{
                     type.label
                 }}</mat-option>
             }
         </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-100">
+        <mat-label>Дата начала тура</mat-label>
+        <input matInput [matDatepicker]="picker" (dateInput)="handleDateSelect($event)" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 </div>

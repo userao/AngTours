@@ -43,7 +43,7 @@ export class ToursComponent implements OnInit, AfterViewInit {
     renderedTours: ITour[];
     typeTourFilter: TourTypes = null;
     searchRegexp: RegExp = null;
-    dateFilter: any = null;
+    dateFilter: Date = null;
 
     ngOnInit(): void {
         this.tourService.getTours().subscribe((data: IToursData) => {
@@ -55,6 +55,11 @@ export class ToursComponent implements OnInit, AfterViewInit {
             this.typeTourFilter = type;
             this.initTourFilterLogic();
         });
+
+        this.tourService.tourDate$.subscribe((date: Date) => {
+            this.dateFilter = date;
+            this.initTourFilterLogic();
+        })
     }
 
     initTourFilterLogic(): void {
@@ -78,10 +83,11 @@ export class ToursComponent implements OnInit, AfterViewInit {
             }
 
             if (this.dateFilter) {
-
+                const tourDate = new Date(tour.date);
+                isDateValid = this.dateFilter.setHours(0,0,0,0) === tourDate.setHours(0,0,0,0);
             }
 
-            isValid = isNameValid && isTypeValid;
+            isValid = isNameValid && isTypeValid && isDateValid;
 
             return isValid;
         });

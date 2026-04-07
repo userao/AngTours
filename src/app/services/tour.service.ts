@@ -12,6 +12,9 @@ export class TourService {
     private tourTypeSubject = new Subject<TourTypes>();
     readonly tourType$ = this.tourTypeSubject.asObservable();
 
+    private tourDateSubject = new Subject<Date>();
+    readonly tourDate$ = this.tourDateSubject.asObservable();
+
     constructor() {
         const tourString = localStorage.getItem('orderedTour');
         if(tourString) {
@@ -29,6 +32,10 @@ export class TourService {
 
     setTourType(type: TourTypes): void {
         this.tourTypeSubject.next(type);
+    }
+
+    setTourDate(date: Date): void {
+        this.tourDateSubject.next(date);
     }
 
     saveTour(tour: ITour) {
