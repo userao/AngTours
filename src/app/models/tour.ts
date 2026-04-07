@@ -13,3 +13,10 @@ export interface ITour {
 export interface IToursData {
     tours: ITour[];
 }
+
+export type TourTypes = 'all' | 'single' | 'group';
+
+export interface IFilterTypeLogic {
+    key: TourTypes,
+    label?: string
+}

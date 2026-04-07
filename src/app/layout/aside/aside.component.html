@@ -1,1 +1,12 @@
-<div class="aside m-3 h-100">aside</div>
+<div class="aside m-3 h-100">
+    <mat-form-field>
+        <mat-label>Выберите тип тура</mat-label>
+        <mat-select [(value)]="selectedType" (selectionChange)="changeTourType($event)">
+            @for (type of tourTypes; track type.key) {
+                <mat-option [value]="type.key" default>{{
+                    type.label
+                }}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+</div>
