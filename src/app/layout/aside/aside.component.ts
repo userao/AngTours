@@ -1,11 +1,16 @@
 import { Component, inject } from "@angular/core";
-import { MatFormField, MatSelectChange, MatSelectModule } from "@angular/material/select";
+import {
+    MatFormField,
+    MatSelectChange,
+    MatSelectModule,
+} from "@angular/material/select";
 import { TourTypes, IFilterTypeLogic } from "../../models/tour";
 import { TourService } from "../../services/tour.service";
+import { MatDatepicker } from "@angular/material/datepicker";
 
 @Component({
     selector: "app-aside",
-    imports: [MatSelectModule, MatFormField],
+    imports: [MatSelectModule, MatFormField, MatDatepicker],
     templateUrl: "./aside.component.html",
     styleUrl: "./aside.component.scss",
 })
@@ -19,7 +24,6 @@ export class AsideComponent {
     ];
 
     changeTourType(e: MatSelectChange): void {
-      console.log(e.value);
-      
+        this.tourService.setTourType(e.value);
     }
 }

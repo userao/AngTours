@@ -1,6 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { TourApiService } from "./api/tour-api.service";
-import { ITour } from "../models/tour";
+import { ITour, TourTypes } from "../models/tour";
+import { Subject } from "rxjs";
 
 @Injectable({
     providedIn: "root",
@@ -8,6 +9,8 @@ import { ITour } from "../models/tour";
 export class TourService {
     private toursApi = inject(TourApiService);
     tour: ITour;
+    private tourTypeSubject = new Subject<TourTypes>();
+    readonly tourType$ = this.tourTypeSubject.asObservable();
 
     constructor() {
         const tourString = localStorage.getItem('orderedTour');
@@ -22,6 +25,10 @@ export class TourService {
 
     getTour(id: string) {
         return this.toursApi.getTour(id);
+    }
+
+    setTourType(type: TourTypes): void {
+        this.tourTypeSubject.next(type);
     }
 
     saveTour(tour: ITour) {

@@ -10,7 +10,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { TourService } from "../../services/tour.service";
-import { ITour, IToursData } from "../../models/tour";
+import { ITour, IToursData, TourTypes } from "../../models/tour";
 import { TourCardComponent } from "./tour-card/tour-card.component";
 import { HighlightActiveDirective } from "../../shared/directives/highlight-active.directive";
 import { Router } from "@angular/router";
@@ -41,11 +41,53 @@ export class ToursComponent implements OnInit, AfterViewInit {
 
     allTours: ITour[];
     renderedTours: ITour[];
+    typeTourFilter: TourTypes = null;
+    searchRegexp: RegExp = null;
+    dateFilter: any = null;
+
     ngOnInit(): void {
         this.tourService.getTours().subscribe((data: IToursData) => {
             this.allTours = data.tours;
             this.renderedTours = [...this.allTours];
         });
+
+        this.tourService.tourType$.subscribe((type: TourTypes) => {
+            this.typeTourFilter = type;
+            this.initTourFilterLogic();
+        });
+    }
+
+    initTourFilterLogic(): void {
+        const filteredTours = [...this.allTours].filter((tour) => {
+            let isValid;
+            let isNameValid = true;
+            let isTypeValid = this.typeTourFilter === 'all' || !this.typeTourFilter;
+            let isDateValid = true;
+
+            const tourTypeMapping = {
+                group: "multi",
+                single: "single",
+            };
+
+            if (this.searchRegexp) {
+                isNameValid = this.searchRegexp.test(tour.name);
+            }
+
+            if (this.typeTourFilter !== 'all' && this.typeTourFilter) {
+                isTypeValid = tour.type as TourTypes === tourTypeMapping[this.typeTourFilter];
+            }
+
+            if (this.dateFilter) {
+
+            }
+
+            isValid = isNameValid && isTypeValid;
+
+            return isValid;
+        });
+
+        this.renderedTours = [...filteredTours];
+        this.updateView();
     }
 
     ngAfterViewInit(): void {
@@ -58,21 +100,13 @@ export class ToursComponent implements OnInit, AfterViewInit {
 
     searchTours(e: InputEvent): void {
         const searchValue = (e.target as HTMLInputElement).value.trim();
-        const regexp = new RegExp(searchValue, "i");
+        this.searchRegexp = new RegExp(searchValue, "i");
 
-        if (!searchValue) {
-            this.renderedTours = [...this.allTours];
-        } else {
-            this.renderedTours = this.allTours.filter((tour) =>
-                regexp.test(tour.name),
-            );
-        }
-
-        this.updateView();
+        this.initTourFilterLogic();
     }
 
     updateView(): void {
-        setTimeout(() => this.higlightActiveDirective.initItems());
+        setTimeout(() => this.higlightActiveDirective.initItems(), 10);
     }
 
     onEnter(e: { el: HTMLElement; index: number }): void {
