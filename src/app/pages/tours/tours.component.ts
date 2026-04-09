@@ -3,6 +3,7 @@ import {
     Component,
     ElementRef,
     inject,
+    OnDestroy,
     OnInit,
     ViewChild,
 } from "@angular/core";
@@ -15,7 +16,7 @@ import { TourCardComponent } from "./tour-card/tour-card.component";
 import { HighlightActiveDirective } from "../../shared/directives/highlight-active.directive";
 import { Router } from "@angular/router";
 import { NgIf } from "@angular/common";
-import { debounceTime, fromEvent } from "rxjs";
+import { debounceTime, fromEvent, Subscription } from "rxjs";
 
 @Component({
     selector: "app-tours",
@@ -30,7 +31,7 @@ import { debounceTime, fromEvent } from "rxjs";
     templateUrl: "./tours.component.html",
     styleUrl: "./tours.component.scss",
 })
-export class ToursComponent implements OnInit, AfterViewInit {
+export class ToursComponent implements OnInit, AfterViewInit, OnDestroy {
     private tourService = inject(TourService);
     private router = inject(Router);
 
@@ -45,22 +46,31 @@ export class ToursComponent implements OnInit, AfterViewInit {
     searchRegexp: RegExp = null;
     dateFilter: Date = null;
 
+    subscriptions: Subscription[];
+
     ngOnInit(): void {
         this.tourService.getTours().subscribe((data: IToursData) => {
             this.allTours = data.tours;
             this.renderedTours = [...this.allTours];
         });
 
-        this.tourService.tourType$.subscribe((type: TourTypes) => {
+        const typeSubscription = this.tourService.tourType$.subscribe((type: TourTypes) => {
             this.typeTourFilter = type;
             this.initTourFilterLogic();
         });
 
-        this.tourService.tourDate$.subscribe((date: Date) => {
+        const dateSubscription = this.tourService.tourDate$.subscribe((date: Date) => {
             this.dateFilter = date;
             this.initTourFilterLogic();
         })
+        this.subscriptions.push(typeSubscription, dateSubscription);
     }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
+    }
+
+    
 
     initTourFilterLogic(): void {
         const filteredTours = [...this.allTours].filter((tour) => {
