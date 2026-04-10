@@ -16,7 +16,13 @@ import { TourCardComponent } from "./tour-card/tour-card.component";
 import { HighlightActiveDirective } from "../../shared/directives/highlight-active.directive";
 import { Router } from "@angular/router";
 import { NgIf } from "@angular/common";
-import { debounceTime, fromEvent, Subscription } from "rxjs";
+import {
+    debounceTime,
+    fromEvent,
+    Subject,
+    Subscription,
+    takeUntil,
+} from "rxjs";
 
 @Component({
     selector: "app-tours",
@@ -48,35 +54,42 @@ export class ToursComponent implements OnInit, AfterViewInit, OnDestroy {
 
     subscriptions: Subscription[];
 
+    private unsubscriber = new Subject<void>();
+
     ngOnInit(): void {
         this.tourService.getTours().subscribe((data: IToursData) => {
             this.allTours = data.tours;
             this.renderedTours = [...this.allTours];
         });
 
-        const typeSubscription = this.tourService.tourType$.subscribe((type: TourTypes) => {
-            this.typeTourFilter = type;
-            this.initTourFilterLogic();
-        });
+        const typeSubscription = this.tourService.tourType$
+            .pipe(takeUntil(this.unsubscriber))
+            .subscribe((type: TourTypes) => {
+                this.typeTourFilter = type;
+                this.initTourFilterLogic();
+            });
 
-        const dateSubscription = this.tourService.tourDate$.subscribe((date: Date) => {
-            this.dateFilter = date;
-            this.initTourFilterLogic();
-        })
+        const dateSubscription = this.tourService.tourDate$
+            .pipe(takeUntil(this.unsubscriber))
+            .subscribe((date: Date) => {
+                this.dateFilter = date;
+                this.initTourFilterLogic();
+            });
         this.subscriptions.push(typeSubscription, dateSubscription);
     }
 
     ngOnDestroy(): void {
-        this.subscriptions.forEach(s => s.unsubscribe());
+        // this.subscriptions.forEach((s) => s.unsubscribe());
+        this.unsubscriber.next();
+        this.unsubscriber.complete();
     }
-
-    
 
     initTourFilterLogic(): void {
         const filteredTours = [...this.allTours].filter((tour) => {
             let isValid;
             let isNameValid = true;
-            let isTypeValid = this.typeTourFilter === 'all' || !this.typeTourFilter;
+            let isTypeValid =
+                this.typeTourFilter === "all" || !this.typeTourFilter;
             let isDateValid = true;
 
             const tourTypeMapping = {
@@ -88,13 +101,17 @@ export class ToursComponent implements OnInit, AfterViewInit, OnDestroy {
                 isNameValid = this.searchRegexp.test(tour.name);
             }
 
-            if (this.typeTourFilter !== 'all' && this.typeTourFilter) {
-                isTypeValid = tour.type as TourTypes === tourTypeMapping[this.typeTourFilter];
+            if (this.typeTourFilter !== "all" && this.typeTourFilter) {
+                isTypeValid =
+                    (tour.type as TourTypes) ===
+                    tourTypeMapping[this.typeTourFilter];
             }
 
             if (this.dateFilter) {
                 const tourDate = new Date(tour.date);
-                isDateValid = this.dateFilter.setHours(0,0,0,0) === tourDate.setHours(0,0,0,0);
+                isDateValid =
+                    this.dateFilter.setHours(0, 0, 0, 0) ===
+                    tourDate.setHours(0, 0, 0, 0);
             }
 
             isValid = isNameValid && isTypeValid && isDateValid;
