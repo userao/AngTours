@@ -1,7 +1,16 @@
 import { inject, Injectable } from "@angular/core";
 import { TourApiService } from "./api/tour-api.service";
-import { ITour, TourTypes } from "../models/tour";
-import { Subject } from "rxjs";
+import { ITour, IToursData, TourTypes } from "../models/tour";
+import {
+    catchError,
+    delay,
+    forkJoin,
+    map,
+    Observable,
+    of,
+    Subject,
+} from "rxjs";
+import { ICountry } from "../models/country";
 
 @Injectable({
     providedIn: "root",
@@ -16,14 +25,43 @@ export class TourService {
     readonly tourDate$ = this.tourDateSubject.asObservable();
 
     constructor() {
-        const tourString = localStorage.getItem('orderedTour');
-        if(tourString) {
+        const tourString = localStorage.getItem("orderedTour");
+        if (tourString) {
             this.tour = JSON.parse(tourString);
         }
     }
 
-    getTours() {
-        return this.toursApi.getTours();
+    getTours(): Observable<ITour[]> {
+        const countries$ = this.toursApi.getCountries();
+        const tours$ = this.toursApi.getTours();
+
+        return forkJoin<[ICountry[], IToursData]>([countries$, tours$]).pipe(
+            delay(1000),
+            map((data) => {
+                const [countries, { tours }] = data;
+                const countriesMap = new Map();
+                const toursWithCountries = [] as ITour[];
+
+                countries.forEach((country) =>
+                    countriesMap.set(country.iso_code2, country),
+                );
+
+                if (Array.isArray(tours)) {
+                    tours.forEach((tour) => {
+                        toursWithCountries.push({
+                            ...tour,
+                            country: countriesMap.get(tour.code) || null,
+                        });
+                    });
+                }
+
+                return toursWithCountries;
+            }),
+            catchError((err) => {
+                console.log(err);
+                return of([]);
+            }),
+        );
     }
 
     getTour(id: string) {

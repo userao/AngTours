@@ -52,13 +52,13 @@ export class ToursComponent implements OnInit, AfterViewInit, OnDestroy {
     searchRegexp: RegExp = null;
     dateFilter: Date = null;
 
-    subscriptions: Subscription[];
+    subscriptions: Subscription[] = [];
 
     private unsubscriber = new Subject<void>();
 
     ngOnInit(): void {
-        this.tourService.getTours().subscribe((data: IToursData) => {
-            this.allTours = data.tours;
+        this.tourService.getTours().subscribe((data: ITour[]) => {
+            this.allTours = data;
             this.renderedTours = [...this.allTours];
         });
 

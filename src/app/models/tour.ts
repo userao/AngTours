@@ -1,3 +1,5 @@
+import { ICountry } from "./country";
+
 export interface ITour {
     id: string;
     name: string;
@@ -9,7 +11,7 @@ export interface ITour {
     type?: string;
     date?: string;
     code?: string;
-    country?: string;
+    country?: ICountry;
     inBasket?: boolean;
 }
 
