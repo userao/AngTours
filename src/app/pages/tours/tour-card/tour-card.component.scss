@@ -3,3 +3,10 @@
         border-color: red;
     }
 }
+
+.tour-country {
+    margin-inline: 16px;
+    & img {
+        height: 1em;
+    }
+}
