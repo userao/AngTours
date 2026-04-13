@@ -8,10 +8,13 @@ export interface ITour {
     locationId: string;
     type?: string;
     date?: string;
+    code?: string;
+    country?: string;
+    inBasket?: boolean;
 }
 
 export interface IToursData {
-    tours: ITour[];
+    tours: Omit<ITour, 'country' | 'inBasket'>[];
 }
 
 export type TourTypes = 'all' | 'single' | 'group';
