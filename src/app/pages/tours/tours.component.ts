@@ -1,5 +1,6 @@
 import {
     AfterViewInit,
+    ChangeDetectorRef,
     Component,
     ElementRef,
     inject,
@@ -9,9 +10,11 @@ import {
 } from "@angular/core";
 import { MatCardModule } from "@angular/material/card";
 import { MatInputModule } from "@angular/material/input";
+import { NzButtonModule } from "ng-zorro-antd/button";
+import { NzModalModule } from "ng-zorro-antd/modal";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { TourService } from "../../services/tour.service";
-import { ITour, IToursData, TourTypes } from "../../models/tour";
+import { ITour, TourTypes } from "../../models/tour";
 import { TourCardComponent } from "./tour-card/tour-card.component";
 import { HighlightActiveDirective } from "../../shared/directives/highlight-active.directive";
 import { Router } from "@angular/router";
@@ -33,6 +36,8 @@ import {
         NgIf,
         MatFormFieldModule,
         MatInputModule,
+        NzButtonModule,
+        NzModalModule,
     ],
     templateUrl: "./tours.component.html",
     styleUrl: "./tours.component.scss",
@@ -51,8 +56,11 @@ export class ToursComponent implements OnInit, AfterViewInit, OnDestroy {
     typeTourFilter: TourTypes = null;
     searchRegexp: RegExp = null;
     dateFilter: Date = null;
-
     subscriptions: Subscription[] = [];
+    showModal = false;
+    mapCountryName: string = null;
+
+    constructor(private cdr: ChangeDetectorRef) {}
 
     private unsubscriber = new Subject<void>();
 
@@ -150,4 +158,9 @@ export class ToursComponent implements OnInit, AfterViewInit, OnDestroy {
             this.router.navigate([`tour/${tourId}`]);
         }
     }
+
+    handleShowModal = (tour: ITour): void => {
+        this.showModal = true;
+        this.mapCountryName = tour.country?.name_ru;
+    };
 }

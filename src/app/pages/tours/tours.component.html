@@ -12,10 +12,20 @@
     (onEnter)="onEnter($event)"
     *ngIf="allTours?.length"
 >
-    @if(!renderedTours.length) {
+    @if (!renderedTours.length) {
         <p>Туры не найдены</p>
     }
     @for (tour of renderedTours; track tour.id) {
-        <app-tour-card [tour]="tour" />
+        <app-tour-card [tour]="tour" [handleShowModal]="handleShowModal" />
     }
 </div>
+<nz-modal
+    [nzTitle]="mapCountryName"
+    nzCentered
+    nzDraggable
+    (nzOnCancel)="showModal = false"
+    (nzOnOk)="showModal = false"
+    [(nzVisible)]="showModal"
+>
+
+</nz-modal>

@@ -16,12 +16,16 @@ export class TourApiService {
 
     constructor() {}
 
-    getTours(): Observable<IToursData> {
-        this.loaderService.setLoader(true);
+    getTours(showLoader = false): Observable<IToursData> {
+        if (showLoader) {
+            this.loaderService.setLoader(true);
+        }
         return this.http.get<IToursData>(this.api.tours).pipe(
             delay(3000),
             finalize(() => {
-                this.loaderService.setLoader(false);
+                if (showLoader) {
+                    this.loaderService.setLoader(false);
+                }
             }),
         );
         //   return this.http.get("/mocks/tours.json");
@@ -31,13 +35,16 @@ export class TourApiService {
         return this.http.get<ITour>(this.api.tour + id);
     }
 
-    getCountries(): Observable<ICountry[]> {
-        this.loaderService.setLoader(true);
+    getCountries(showLoader = false): Observable<ICountry[]> {
+        if (showLoader) {
+            this.loaderService.setLoader(true);
+        }
         return this.http.get<ICountry[]>(API.countries).pipe(
             catchError(() => of([])),
-            delay(2000),
             finalize(() => {
-                this.loaderService.setLoader(false);
+                if (showLoader) {
+                    this.loaderService.setLoader(false);
+                }
             }),
         );
     }

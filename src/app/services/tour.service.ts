@@ -4,6 +4,7 @@ import { ITour, IToursData, TourTypes } from "../models/tour";
 import {
     catchError,
     delay,
+    finalize,
     forkJoin,
     map,
     Observable,
@@ -11,18 +12,21 @@ import {
     Subject,
 } from "rxjs";
 import { ICountry } from "../models/country";
+import { LoaderService } from "./loader.service";
 
 @Injectable({
     providedIn: "root",
 })
 export class TourService {
     private toursApi = inject(TourApiService);
+    private loaderService = inject(LoaderService);
     tour: ITour;
     private tourTypeSubject = new Subject<TourTypes>();
     readonly tourType$ = this.tourTypeSubject.asObservable();
 
     private tourDateSubject = new Subject<Date>();
     readonly tourDate$ = this.tourDateSubject.asObservable();
+
 
     constructor() {
         const tourString = localStorage.getItem("orderedTour");
@@ -34,6 +38,7 @@ export class TourService {
     getTours(): Observable<ITour[]> {
         const countries$ = this.toursApi.getCountries();
         const tours$ = this.toursApi.getTours();
+        this.loaderService.setLoader(true);
 
         return forkJoin<[ICountry[], IToursData]>([countries$, tours$]).pipe(
             delay(1000),
@@ -61,6 +66,9 @@ export class TourService {
                 console.log(err);
                 return of([]);
             }),
+            finalize(() => {
+                this.loaderService.setLoader(false);
+            })
         );
     }
 
