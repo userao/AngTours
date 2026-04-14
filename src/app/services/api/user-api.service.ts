@@ -9,9 +9,9 @@ import { LoaderService } from "../loader.service";
     providedIn: "root",
 })
 export class UserApiService {
-    private api = API;
     private http = inject(HttpClient);
     private loaderService = inject(LoaderService);
+    private api = inject(API);
 
     constructor() {}
 

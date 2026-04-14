@@ -10,9 +10,9 @@ import { ICountry } from "../../models/country";
     providedIn: "root",
 })
 export class TourApiService {
-    private api = API;
     private http = inject(HttpClient);
     private loaderService = inject(LoaderService);
+    private api = inject(API);
 
     constructor() {}
 
@@ -21,7 +21,7 @@ export class TourApiService {
             this.loaderService.setLoader(true);
         }
         return this.http.get<IToursData>(this.api.tours).pipe(
-            delay(3000),
+            delay(2000),
             finalize(() => {
                 if (showLoader) {
                     this.loaderService.setLoader(false);
@@ -39,7 +39,7 @@ export class TourApiService {
         if (showLoader) {
             this.loaderService.setLoader(true);
         }
-        return this.http.get<ICountry[]>(API.countries).pipe(
+        return this.http.get<ICountry[]>(this.api.countries).pipe(
             catchError(() => of([])),
             finalize(() => {
                 if (showLoader) {

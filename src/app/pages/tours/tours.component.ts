@@ -26,6 +26,7 @@ import {
     Subscription,
     takeUntil,
 } from "rxjs";
+import { NzNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
 
 @Component({
     selector: "app-tours",
@@ -38,6 +39,7 @@ import {
         MatInputModule,
         NzButtonModule,
         NzModalModule,
+        NzNoAnimationModule
     ],
     templateUrl: "./tours.component.html",
     styleUrl: "./tours.component.scss",
