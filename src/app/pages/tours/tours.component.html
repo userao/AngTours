@@ -28,5 +28,14 @@
     (nzOnOk)="showModal = false"
     [(nzVisible)]="showModal"
 >
+    <ng-container *nzModalContent>
 
+        @if (weatherData) {
+            <p>Погода: {{weatherData.currentWeather}}</p>
+            <p *ngIf="weatherData.rain > 0">Идет дождь</p>
+            <p *ngIf="weatherData.snowfall > 0">Идет снег</p>
+        }
+
+        <app-map [location]="location" />
+    </ng-container>
 </nz-modal>

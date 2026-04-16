@@ -26,7 +26,9 @@ import {
     Subscription,
     takeUntil,
 } from "rxjs";
-import { NzNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
+import { NzNoAnimationModule } from "ng-zorro-antd/core/no-animation";
+import { MapComponent } from "../../shared/components/map/map.component";
+import { Coords, IWeatherData } from "../../models/country";
 
 @Component({
     selector: "app-tours",
@@ -39,7 +41,8 @@ import { NzNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
         MatInputModule,
         NzButtonModule,
         NzModalModule,
-        NzNoAnimationModule
+        NzNoAnimationModule,
+        MapComponent,
     ],
     templateUrl: "./tours.component.html",
     styleUrl: "./tours.component.scss",
@@ -61,6 +64,8 @@ export class ToursComponent implements OnInit, AfterViewInit, OnDestroy {
     subscriptions: Subscription[] = [];
     showModal = false;
     mapCountryName: string = null;
+    location: Coords;
+    weatherData: IWeatherData;
 
     constructor(private cdr: ChangeDetectorRef) {}
 
@@ -161,8 +166,23 @@ export class ToursComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    handleShowModal = (tour: ITour): void => {
-        this.showModal = true;
+    handleShowModal = (e: Event, tour: ITour, code: string): void => {
         this.mapCountryName = tour.country?.name_ru;
+
+        e.stopPropagation();
+        
+        this.tourService.getCountryByCode(tour.country.name_en, code).subscribe((data) => {
+            if (data) {
+                const countryInfo = data.countryData;
+                const {latitude, longitude} = countryInfo;
+                
+                this.location = {
+                    latitude,
+                    longitude,
+                };
+                this.weatherData = data.weatherData;
+                this.showModal = true;
+            }
+        });
     };
 }

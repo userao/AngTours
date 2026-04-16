@@ -12,7 +12,7 @@
                 </p>
             </mat-card-content>
         </div>
-        <div class="tour-country" (click)="handleShowModal(tour)">
+        <div class="tour-country" (click)="handleShowModal($event, tour, tour.country?.iso_code2)">
             Страна: {{ tour.country?.name_ru }}
             <img [src]="tour.country?.flag_url" />
         </div>

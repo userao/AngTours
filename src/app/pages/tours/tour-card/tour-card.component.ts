@@ -16,7 +16,7 @@ import { Router } from "@angular/router";
 export class TourCardComponent {
     private router = inject(Router);
     @Input() tour: ITour;
-    @Input() handleShowModal: (tour: ITour) => void;
+    @Input() handleShowModal: (e: Event, tour: ITour, code: string) => void;
 
     goToTour(): void {
         this.router.navigate([`tour/${this.tour.id}`]);

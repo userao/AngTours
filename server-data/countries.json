@@ -431,6 +431,7 @@
 }, {
     "flag_url" : "//upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/250px-Flag_of_Italy.svg.png",
     "name_ru" : "Италия",
+    "name_en": "Italy",
     "iso_code2" : "IT",
     "iso_code3" : "ITA"
 }, {
@@ -666,6 +667,7 @@
 }, {
     "flag_url" : "//upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/250px-Flag_of_Mexico.svg.png",
     "name_ru" : "Мексика",
+    "name_en": "Mexico",
     "iso_code2" : "MX",
     "iso_code3" : "MEX"
 }, {
@@ -1015,6 +1017,7 @@
 }, {
     "flag_url" : "//upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/250px-Flag_of_the_United_States.svg.png",
     "name_ru" : "США",
+    "name_en": "United States",
     "iso_code2" : "US",
     "iso_code3" : "USA"
 }, {
@@ -1200,6 +1203,7 @@
 }, {
     "flag_url" : "//upload.wikimedia.org/wikipedia/commons/thumb/1/11/Flag_of_Sri_Lanka.svg/250px-Flag_of_Sri_Lanka.svg.png",
     "name_ru" : "Шри-Ланка",
+    "name_en": "Sri Lanka",
     "iso_code2" : "LK",
     "iso_code3" : "LKA"
 }, {
@@ -1250,6 +1254,7 @@
 }, {
     "flag_url" : "//upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/250px-Flag_of_Japan.svg.png",
     "name_ru" : "Япония",
+    "name_en": "Japan",
     "iso_code2" : "JP",
     "iso_code3" : "JPN"
 }

@@ -4,4 +4,6 @@ export interface IConfig {
     tours: string;
     tour: string;
     countries: string;
+    weather: string;
+    countryByCode: string;
 }

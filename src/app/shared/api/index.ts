@@ -8,8 +8,10 @@ const apiData: IConfig = {
     tours: `${environment.server}/tours`,
     tour: `${environment.server}/tour/`,
     countries: `${environment.server}/countries`,
+    weather: "https://api.open-meteo.com/v1/forecast",
+    countryByCode: "https://geocoding-api.open-meteo.com/v1/search",
 } as const;
 
-export const API = new InjectionToken<IConfig>('app.config', {
+export const API = new InjectionToken<IConfig>("app.config", {
     factory: () => apiData,
-})
+});

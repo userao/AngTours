@@ -11,7 +11,7 @@ import {
     of,
     Subject,
 } from "rxjs";
-import { ICountry } from "../models/country";
+import { ICountry, ICountryWeather } from "../models/country";
 import { LoaderService } from "./loader.service";
 
 @Injectable({
@@ -91,5 +91,9 @@ export class TourService {
 
     getSavedTour(): ITour {
         return this.tour;
+    }
+
+    getCountryByCode(name: string, code: string): Observable<ICountryWeather> {
+        return this.toursApi.getCountryByCode(name, code);
     }
 }
