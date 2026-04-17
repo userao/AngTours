@@ -1,10 +1,18 @@
 @use "variables";
+@use '@angular/material' as mat; 
+
+:host {
+  @include mat.badge-overrides((
+    background-color: rgb(209, 163, 171),
+  ));
+}
 
 :host {
     height: 60px;
     width: 100%;
     display: block;
 }
+
 
 .layout-header {
     display: flex;

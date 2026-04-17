@@ -12,12 +12,21 @@
                 </p>
             </mat-card-content>
         </div>
-        <div class="tour-country" (click)="handleShowModal($event, tour, tour.country?.iso_code2)">
+        <div
+            class="tour-country"
+            (click)="handleShowModal($event, tour, tour.country?.iso_code2)"
+        >
             Страна: {{ tour.country?.name_ru }}
             <img [src]="tour.country?.flag_url" />
         </div>
     </div>
-    <mat-card-actions>
+    <mat-card-actions class="d-flex justify-content-between">
         <a mat-button (click)="goToTour()">Подробнее</a>
+        <button mat-mini-fab (click)="handleCart()">
+            <mat-icon
+                [fontIcon]="isInCart ? 'remove_shopping_cart' : 'add_shopping_cart'"
+                [ngClass]="isInCart ? 'cart-remove' : 'cart-add'"
+            ></mat-icon>
+        </button>
     </mat-card-actions>
 </mat-card>

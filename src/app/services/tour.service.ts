@@ -20,18 +20,39 @@ import { LoaderService } from "./loader.service";
 export class TourService {
     private toursApi = inject(TourApiService);
     private loaderService = inject(LoaderService);
-    tour: ITour;
+    
     private tourTypeSubject = new Subject<TourTypes>();
     readonly tourType$ = this.tourTypeSubject.asObservable();
-
     private tourDateSubject = new Subject<Date>();
     readonly tourDate$ = this.tourDateSubject.asObservable();
+    private cartItemsSubject = new Subject<ITour[]>();
+    readonly cartItems$ = this.cartItemsSubject.asObservable();
+    
+    tour: ITour;
 
+    cart: ITour[] = [];
 
     constructor() {
         const tourString = localStorage.getItem("orderedTour");
         if (tourString) {
             this.tour = JSON.parse(tourString);
+        }
+    }
+
+    addTourToCart(tour: ITour): void {
+        this.cart.push(tour);
+        this.cartItemsSubject.next(this.cart);
+    }
+
+    isInCart(tour: ITour) {
+        return this.cart.findIndex(t => t.id === tour.id) > -1;
+    }
+
+    removeTourFromCart(tourToRemove: ITour): void {
+        const tourIndex = this.cart.findIndex(tour => tour.id === tourToRemove.id);
+        if (tourIndex > -1) {
+            this.cart.splice(tourIndex, 1);
+            this.cartItemsSubject.next(this.cart);
         }
     }
 
