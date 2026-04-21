@@ -1,43 +1,45 @@
-@if (!submitted) {
-    <div class="tour__info">
-        <p>Вы выбрали тур {{ tour.name }}</p>
-        @if (tour.date) {
-            <p>Дата: {{ tour.date | date: "dd MMMM YYYY" }}</p>
-        }
-        <p>Цена: {{ tour.price }}</p>
-    </div>
-    <form (submit)="handleSubmit()">
-        <input
-            required
-            type="text"
-            class="form-input"
-            name="name"
-            [(ngModel)]="name"
-            #nameInput="ngModel"
-            placeholder="ФИО"
-            [ngClass]="nameInput.invalid ? 'input-error' : ''"
-        />
-        <input
-            required
-            type="email"
-            class="form-input"
-            name="email"
-            [(ngModel)]="email"
-            #emailInput="ngModel"
-            placeholder="Почта"
-            [ngClass]="emailInput.invalid ? 'input-error' : ''"
-        />
-        <button
-            mat-button
-            type="submit"
-            [disabled]="nameInput.invalid || emailInput.invalid"
-        >
-            Забронировать
-        </button>
-    </form>
-} @else {
-    <p>
-        Спасибо, что воспользовались нашим сервисом для поиска дешевых туров!<br />Мы
-        с вами обязательно свяжемся!
-    </p>
+@if (tour) {
+    @if (!submitted) {
+        <div class="tour__info">
+            <p>Вы выбрали тур {{ tour.name }}</p>
+            @if (tour.date) {
+                <p>Дата: {{ tour.date | date: "dd MMMM YYYY" }}</p>
+            }
+            <p>Цена: {{ tour.price }}</p>
+        </div>
+        <form (submit)="handleSubmit()">
+            <input
+                required
+                type="text"
+                class="form-input"
+                name="name"
+                [(ngModel)]="name"
+                #nameInput="ngModel"
+                placeholder="ФИО"
+                [ngClass]="nameInput.invalid ? 'input-error' : ''"
+            />
+            <input
+                required
+                type="email"
+                class="form-input"
+                name="email"
+                [(ngModel)]="email"
+                #emailInput="ngModel"
+                placeholder="Почта"
+                [ngClass]="emailInput.invalid ? 'input-error' : ''"
+            />
+            <button
+                mat-button
+                type="submit"
+                [disabled]="nameInput.invalid || emailInput.invalid"
+            >
+                Забронировать
+            </button>
+        </form>
+    } @else {
+        <p>
+            Спасибо, что воспользовались нашим сервисом для поиска дешевых
+            туров!<br />Мы с вами обязательно свяжемся!
+        </p>
+    }
 }

@@ -20,7 +20,7 @@ export const routes: Routes = [
                     ),
             },
             {
-                path: 'order',
+                path: 'order/:id',
                 component: OrderComponent,
             },
         ],

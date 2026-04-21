@@ -4,6 +4,7 @@ import { TourService } from "../../services/tour.service";
 import { ITour } from "../../models/tour";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
+import { ActivatedRoute } from "@angular/router";
 
 
 @Component({
@@ -14,13 +15,15 @@ import { MatButtonModule } from "@angular/material/button";
 })
 export class OrderComponent implements OnInit {
     private tourService = inject(TourService);
+    private route = inject(ActivatedRoute);
     tour: ITour = null;
     submitted = false;
     name: string = '';
     email: string = '';
 
     ngOnInit(): void {
-        this.tour = this.tourService.getSavedTour();
+        const id = this.route.snapshot.paramMap.get("id");
+        this.tourService.getTour(id).subscribe((tour) => this.tour = tour);
     }
     handleSubmit(): void {
         this.submitted = true;

@@ -36,7 +36,6 @@ export class TourItemComponent implements OnInit {
     }
 
     handleOrder(): void {
-        this.tourService.saveTour(this.tour);
-        this.router.navigate(["order"]);
+        this.router.navigate([`order/${this.tour.id}`]);
     }
 }
