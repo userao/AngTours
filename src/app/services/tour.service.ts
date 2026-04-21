@@ -2,6 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { TourApiService } from "./api/tour-api.service";
 import { ITour, IToursData, TourTypes } from "../models/tour";
 import {
+    BehaviorSubject,
     catchError,
     delay,
     finalize,
@@ -23,14 +24,16 @@ export class TourService {
     
     private tourTypeSubject = new Subject<TourTypes>();
     readonly tourType$ = this.tourTypeSubject.asObservable();
+
     private tourDateSubject = new Subject<Date>();
     readonly tourDate$ = this.tourDateSubject.asObservable();
-    private cartItemsSubject = new Subject<ITour[]>();
+
+    cart: ITour[] = [];
+    private cartItemsSubject = new BehaviorSubject<ITour[]>(this.cart);
     readonly cartItems$ = this.cartItemsSubject.asObservable();
     
     tour: ITour;
 
-    cart: ITour[] = [];
 
     constructor() {
         const tourString = localStorage.getItem("orderedTour");
@@ -41,17 +44,15 @@ export class TourService {
 
     addTourToCart(tour: ITour): void {
         this.cart.push(tour);
+        tour.inBasket = true;
         this.cartItemsSubject.next(this.cart);
-    }
-
-    isInCart(tour: ITour) {
-        return this.cart.findIndex(t => t.id === tour.id) > -1;
     }
 
     removeTourFromCart(tourToRemove: ITour): void {
         const tourIndex = this.cart.findIndex(tour => tour.id === tourToRemove.id);
         if (tourIndex > -1) {
             this.cart.splice(tourIndex, 1);
+            tourToRemove.inBasket = false;
             this.cartItemsSubject.next(this.cart);
         }
     }

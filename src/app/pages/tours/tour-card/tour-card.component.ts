@@ -24,10 +24,11 @@ export class TourCardComponent implements OnInit {
     @Input() tour: ITour;
     @Input() handleShowModal: (e: Event, tour: ITour, code: string) => void;
     cart = faCartShopping;
-    isInCart: boolean;
 
     ngOnInit(): void {
-        this.isInCart = this.tourService.isInCart(this.tour);
+        if(this.tour.inBasket === undefined) {
+            this.tour.inBasket = false;
+        }
     }
 
     goToTour(): void {
@@ -35,12 +36,10 @@ export class TourCardComponent implements OnInit {
     }
 
     handleCart(): void {
-        if (this.isInCart) {
+        if (this.tour.inBasket) {
             this.tourService.removeTourFromCart(this.tour);
-            this.isInCart = false;
         } else {
             this.tourService.addTourToCart(this.tour);
-            this.isInCart = true;
         }
     }
 }

@@ -1,7 +1,7 @@
 <div class="layout-header d-flex justify-between align-items-center px-4">
         <app-menu [items]="menuItems" />
     <div class="d-flex gap-4 align-items-center">
-        <mat-icon [matBadge]="cartItemsLength" matBadgeColor="accent">shopping_cart</mat-icon>
+        <mat-icon [matBadge]="(tourService.cartItems$ | async).length" matBadgeColor="accent">shopping_cart</mat-icon>
         <div>{{ date | date: "HH:mm EEEE" }}</div>
         @if (userName) {
         <div class="d-flex gap-2 align-items-center"> 

@@ -1,5 +1,5 @@
 import { Component, inject, NgZone, OnInit } from "@angular/core";
-import { DatePipe } from "@angular/common";
+import { AsyncPipe, DatePipe } from "@angular/common";
 import { UserService } from "../../services/user.service";
 import { MenuComponent } from "./menu/menu.component";
 import { MatButtonModule } from "@angular/material/button";
@@ -9,7 +9,7 @@ import { TourService } from "../../services/tour.service";
 import {MatBadgeModule} from '@angular/material/badge';
 @Component({
     selector: "app-header",
-    imports: [DatePipe, MenuComponent, MatButtonModule, MatIconModule, MatBadgeModule],
+    imports: [DatePipe, MenuComponent, MatButtonModule, MatIconModule, MatBadgeModule, AsyncPipe],
     templateUrl: "./header.component.html",
     styleUrl: "./header.component.scss",
 })
@@ -17,8 +17,7 @@ export class HeaderComponent implements OnInit {
     private router = inject(Router);
     private userService = inject(UserService);
     private ngZone = inject(NgZone);
-    private tourService = inject(TourService);
-    cartItemsLength: number;
+    tourService = inject(TourService);
 
     userName: string = null;
     date = new Date();
@@ -27,12 +26,6 @@ export class HeaderComponent implements OnInit {
         { route: "settings", title: "настройки" },
     ];
     ngOnInit(): void {
-        this.cartItemsLength = this.tourService.cart.length
-
-        this.tourService.cartItems$.subscribe((cartItems) => {
-            this.cartItemsLength = cartItems.length;
-        })
-
         this.ngZone.runOutsideAngular(() =>
             setInterval(() => {
                 this.date = new Date();
