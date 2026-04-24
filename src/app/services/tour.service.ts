@@ -11,6 +11,7 @@ import {
     Observable,
     of,
     Subject,
+    withLatestFrom,
 } from "rxjs";
 import { ICountry, ICountryWeather } from "../models/country";
 import { LoaderService } from "./loader.service";
@@ -22,7 +23,7 @@ import { IOrder } from "../models/order";
 export class TourService {
     private toursApi = inject(TourApiService);
     private loaderService = inject(LoaderService);
-    
+
     private tourTypeSubject = new Subject<TourTypes>();
     readonly tourType$ = this.tourTypeSubject.asObservable();
 
@@ -32,9 +33,8 @@ export class TourService {
     cart: ITour[] = [];
     private cartItemsSubject = new BehaviorSubject<ITour[]>(this.cart);
     readonly cartItems$ = this.cartItemsSubject.asObservable();
-    
-    tour: ITour;
 
+    tour: ITour;
 
     constructor() {
         const tourString = localStorage.getItem("orderedTour");
@@ -50,7 +50,9 @@ export class TourService {
     }
 
     removeTourFromCart(tourToRemove: ITour): void {
-        const tourIndex = this.cart.findIndex(tour => tour.id === tourToRemove.id);
+        const tourIndex = this.cart.findIndex(
+            (tour) => tour.id === tourToRemove.id,
+        );
         if (tourIndex > -1) {
             this.cart.splice(tourIndex, 1);
             tourToRemove.inBasket = false;
@@ -65,7 +67,8 @@ export class TourService {
 
         return forkJoin<[ICountry[], IToursData]>([countries$, tours$]).pipe(
             delay(1000),
-            map((data) => {
+            withLatestFrom(this.cartItems$),
+            map(([data, cartItems]) => {
                 const [countries, { tours }] = data;
                 const countriesMap = new Map();
                 const toursWithCountries = [] as ITour[];
@@ -76,10 +79,21 @@ export class TourService {
 
                 if (Array.isArray(tours)) {
                     tours.forEach((tour) => {
-                        toursWithCountries.push({
-                            ...tour,
-                            country: countriesMap.get(tour.code) || null,
-                        });
+                        let tourWithCountry: ITour;
+                        const cartIndex = cartItems.findIndex(
+                            (cartItem) => cartItem.id === tour.id,
+                        );
+
+                        if (cartIndex > -1) {
+                            tourWithCountry = cartItems[cartIndex];
+                        } else {
+                            tourWithCountry = {
+                                ...tour,
+                                country: countriesMap.get(tour.code) || null,
+                            };
+                        }
+
+                        toursWithCountries.push(tourWithCountry);
                     });
                 }
 
@@ -91,7 +105,7 @@ export class TourService {
             }),
             finalize(() => {
                 this.loaderService.setLoader(false);
-            })
+            }),
         );
     }
 
