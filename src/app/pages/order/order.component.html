@@ -7,31 +7,47 @@
             }
             <p>Цена: {{ tour.price }}</p>
         </div>
-        <form (submit)="handleSubmit()">
-            <input
-                required
-                type="text"
-                class="form-input"
-                name="name"
-                [(ngModel)]="name"
-                #nameInput="ngModel"
-                placeholder="ФИО"
-                [ngClass]="nameInput.invalid ? 'input-error' : ''"
-            />
-            <input
-                required
-                type="email"
-                class="form-input"
-                name="email"
-                [(ngModel)]="email"
-                #emailInput="ngModel"
-                placeholder="Почта"
-                [ngClass]="emailInput.invalid ? 'input-error' : ''"
-            />
+        <form
+            [formGroup]="clientInfoForm"
+            class="d-flex flex-column w-50"
+            (submit)="handleSubmit()"
+        >
+            <h3>Информация о покупателе</h3>
+            <mat-form-field>
+                <mat-label for="name">Имя</mat-label>
+                <input matInput formControlName="name" type="text" id="name" />
+                @if (clientInfoForm.get("name").hasError("required")) {
+                    <mat-error>Имя <strong>обязательно</strong></mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label for="email">Электронная почта</mat-label>
+                <input
+                    matInput
+                    formControlName="email"
+                    type="email"
+                    id="email"
+                />
+                @if (clientInfoForm.get("email").hasError("required")) {
+                    <mat-error>Почта <strong>обязательнa</strong></mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label for="cardNumber">Номер карты</mat-label>
+                <input
+                    matInput
+                    formControlName="cardNumber"
+                    type="text"
+                    id="cardNumber"
+                />
+                @if (clientInfoForm.get("cardNumber").hasError("required")) {
+                    <mat-error>Номер карты <strong>обязателен</strong></mat-error>
+                }
+            </mat-form-field>
             <button
-                mat-button
+                mat-flat-button
                 type="submit"
-                [disabled]="nameInput.invalid || emailInput.invalid"
+                [disabled]="!clientInfoForm.valid"
             >
                 Забронировать
             </button>

@@ -19,6 +19,7 @@ import {
     ICountryWeather,
 } from "../../models/country";
 import { MapService } from "../map.service";
+import { IOrder } from "../../models/order";
 
 @Injectable({
     providedIn: "root",
@@ -87,5 +88,9 @@ export class TourApiService {
                     );
                 }),
             );
+    }
+
+    postOrder(order: IOrder): Observable<IOrder> {
+        return this.http.post<IOrder>(this.api.orders, order);
     }
 }

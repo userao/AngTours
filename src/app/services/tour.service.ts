@@ -14,6 +14,7 @@ import {
 } from "rxjs";
 import { ICountry, ICountryWeather } from "../models/country";
 import { LoaderService } from "./loader.service";
+import { IOrder } from "../models/order";
 
 @Injectable({
     providedIn: "root",
@@ -117,5 +118,9 @@ export class TourService {
 
     getCountryByCode(name: string, code: string): Observable<ICountryWeather> {
         return this.toursApi.getCountryByCode(name, code);
+    }
+
+    placeOrder(order: IOrder): Observable<IOrder> {
+        return this.toursApi.postOrder(order);
     }
 }

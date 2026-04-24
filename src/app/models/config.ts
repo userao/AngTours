@@ -6,4 +6,5 @@ export interface IConfig {
     countries: string;
     weather: string;
     countryByCode: string;
+    orders: string;
 }
