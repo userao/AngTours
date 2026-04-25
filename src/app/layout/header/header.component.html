@@ -1,15 +1,17 @@
 <div class="layout-header d-flex justify-between align-items-center px-4">
-        <app-menu [items]="menuItems" />
-    <div class="d-flex gap-4 align-items-center">
-        <mat-icon [matBadge]="(tourService.cartItems$ | async).length" matBadgeColor="accent">shopping_cart</mat-icon>
-        <div>{{ date | date: "HH:mm EEEE" }}</div>
-        @if (userName) {
-        <div class="d-flex gap-2 align-items-center"> 
-            <div>{{ userName }}</div>
-                <button mat-mini-fab (click)="handleLogout()">
-                    <mat-icon>logout</mat-icon>
-                </button>
-            </div>
-        } 
+  <app-menu [items]="menuItems" />
+  <div class="d-flex gap-4 align-items-center">
+    <a href="/cart">
+      <mat-icon [matBadge]="(tourService.cartItems$ | async).length" matBadgeColor="accent">shopping_cart</mat-icon>
+    </a>
+    <div>{{ date | date: "HH:mm EEEE" }}</div>
+    @if (userName) {
+    <div class="d-flex gap-2 align-items-center">
+      <div>{{ userName }}</div>
+      <button mat-mini-fab (click)="handleLogout()">
+        <mat-icon>logout</mat-icon>
+      </button>
     </div>
+    }
+  </div>
 </div>

@@ -22,7 +22,6 @@ import { MatInputModule } from "@angular/material/input";
         DatePipe,
         FormsModule,
         MatButtonModule,
-        NgClass,
         MatInputModule,
         ReactiveFormsModule,
     ],
