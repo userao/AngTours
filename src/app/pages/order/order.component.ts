@@ -1,12 +1,9 @@
 import { Component, inject, OnInit } from "@angular/core";
-import { DatePipe, NgClass } from "@angular/common";
+import { DatePipe } from "@angular/common";
 import { TourService } from "../../services/tour.service";
 import { ITour } from "../../models/tour";
 import {
-    FormArray,
     FormBuilder,
-    FormControl,
-    FormGroup,
     FormsModule,
     ReactiveFormsModule,
     Validators,
