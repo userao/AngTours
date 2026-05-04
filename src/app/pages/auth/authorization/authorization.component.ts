@@ -15,10 +15,18 @@ import { UserApiService } from "../../../services/api/user-api.service";
 import { Router } from "@angular/router";
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
 import { LoaderService } from "../../../services/loader.service";
+import { ServerError } from "../../../models/error";
 
 @Component({
     selector: "app-authorization",
-    imports: [ReactiveFormsModule, NgClass, MatButtonModule, MatCheckboxModule, LoaderComponent, AsyncPipe],
+    imports: [
+        ReactiveFormsModule,
+        NgClass,
+        MatButtonModule,
+        MatCheckboxModule,
+        LoaderComponent,
+        AsyncPipe,
+    ],
     templateUrl: "./authorization.component.html",
     styleUrl: "./authorization.component.scss",
 })
@@ -76,11 +84,17 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
                 } else {
                     this.userService.setUsername(user.login);
                 }
-                
+
                 this.router.navigate(["/"]);
             },
-            (err) => {
-                this.snackBar.open("Ошибка авторизации", "Закрыть");
+            (err: ServerError) => {
+                const errMsgs: {
+                    [key: number]: string;
+                } = {
+                    409: "Пользователь не найден",
+                    500: "Ошибка связи с сервером",
+                };
+                this.snackBar.open(errMsgs[err.status], "Закрыть");
                 this.submitted = false;
                 throw new Error(err.message);
             },

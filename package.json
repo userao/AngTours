@@ -9,6 +9,7 @@
         "watch": "ng build --watch --configuration development",
         "test": "ng test",
         "express": "node scripts/server.js",
+        "start-prod": "ng serve --configuration production",
         "dev": "concurrently npm:start npm:express"
     },
     "private": true,

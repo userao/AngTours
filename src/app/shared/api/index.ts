@@ -3,8 +3,8 @@ import { environment } from "../../../environments/environment";
 import { IConfig } from "../../models/config";
 
 const apiData: IConfig = {
-    auth: `${environment.server}/auth`,
-    register: `${environment.server}/register`,
+    auth: `${environment.server}/users/auth`,
+    register: `${environment.server}/users/register`,
     tours: `${environment.server}/tours`,
     tour: `${environment.server}/tour/`,
     countries: `${environment.server}/countries`,

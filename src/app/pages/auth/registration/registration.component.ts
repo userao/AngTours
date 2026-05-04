@@ -7,6 +7,7 @@ import { UserApiService } from "../../../services/api/user-api.service";
 import { IRegistrationUser } from "../../../models/user";
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
 import { LoaderService } from "../../../services/loader.service";
+import { ServerError } from "../../../models/error";
 
 @Component({
     selector: "app-registration",
@@ -35,9 +36,17 @@ export class RegistrationComponent {
                 this.submitted = true;
                 this.snackBar.open("Пользователь зарегистрирован", "Закрыть");
             },
-            (err) => {
+            (err: ServerError) => {
+                const errMsgs: {
+                    [key: number]: string
+                } = {
+                    409: "Пользователь уже существует",
+                    500: "Ошибка связи с сервером",
+
+                }
+
                 this.snackBar.open(
-                    "Ошибка регистрации пользователя",
+                    errMsgs[err.status],
                     "Закрыть",
                 );
                 this.submitted = false;
