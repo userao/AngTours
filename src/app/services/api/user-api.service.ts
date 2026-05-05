@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { API } from "../../shared/api";
 import { HttpClient } from "@angular/common/http";
 import { delay, finalize, Observable } from "rxjs";
-import { IAuthUser, IRegistrationUser } from "../../models/user";
+import { IAuthUser, IAuthUserRes, IRegistrationUser } from "../../models/user";
 import { LoaderService } from "../loader.service";
 
 @Injectable({
@@ -15,9 +15,9 @@ export class UserApiService {
 
     constructor() {}
 
-    auth(body: IAuthUser): Observable<IAuthUser> {
+    auth(body: IAuthUser): Observable<IAuthUserRes> {
         this.loaderService.setLoader(true);
-        return this.http.post<IAuthUser>(this.api.auth, body).pipe(
+        return this.http.post<IAuthUserRes>(this.api.auth, body).pipe(
             delay(1000),
             finalize(() => this.loaderService.setLoader(false)),
         );

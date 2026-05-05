@@ -9,7 +9,7 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
-import { IAuthUser } from "../../../models/user";
+import { IAuthUser, IAuthUserRes } from "../../../models/user";
 import { UserService } from "../../../services/user.service";
 import { UserApiService } from "../../../services/api/user-api.service";
 import { Router } from "@angular/router";
@@ -78,11 +78,11 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
         };
         this.submitted = true;
         this.userApiService.auth(user).subscribe(
-            () => {
+            (data: IAuthUserRes) => {
                 if (this.saveInStore.value) {
-                    this.userService.saveUsername(user.login);
+                    this.userService.saveUsername(data.login);
                 } else {
-                    this.userService.setUsername(user.login);
+                    this.userService.setUsername(data.login);
                 }
 
                 this.router.navigate(["/"]);
@@ -91,7 +91,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
                 const errMsgs: {
                     [key: number]: string;
                 } = {
-                    409: "Пользователь не найден",
+                    409: "Неверный логин или пароль",
                     500: "Ошибка связи с сервером",
                 };
                 this.snackBar.open(errMsgs[err.status], "Закрыть");
