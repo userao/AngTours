@@ -11,6 +11,10 @@ export class UserService {
         this.loadUser();
     }
 
+    setToken(token: string): void {
+        localStorage.setItem("token", token);
+    }
+
     loadUser() {
         const savedUsername = localStorage.getItem("username");
 
@@ -35,5 +39,6 @@ export class UserService {
     logOut() {
         this.username = null;
         localStorage.removeItem("username");
+        localStorage.removeItem("token");
     }
 }

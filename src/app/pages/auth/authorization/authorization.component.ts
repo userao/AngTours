@@ -78,25 +78,28 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
         };
         this.submitted = true;
         this.userApiService.auth(user).subscribe(
-            (data: IAuthUserRes) => {
+            (data: {access_token: string}) => {
                 if (this.saveInStore.value) {
-                    this.userService.saveUsername(data.login);
+                    this.userService.saveUsername(user.login);
                 } else {
-                    this.userService.setUsername(data.login);
+                    this.userService.setUsername(user.login);
                 }
+                this.userService.setToken(data.access_token);
 
                 this.router.navigate(["/"]);
             },
-            (err: ServerError) => {
+            (err: {error: ServerError}) => {
+                const {error} = err;
                 const errMsgs: {
                     [key: number]: string;
                 } = {
-                    409: "Неверный логин или пароль",
+                    401: "Неверный логин или пароль",
                     500: "Ошибка связи с сервером",
                 };
-                this.snackBar.open(errMsgs[err.statusCode], "Закрыть");
+                
+                const msg = errMsgs[error.statusCode] ?? "Произошла ошибка"
+                this.snackBar.open(msg, "Закрыть");
                 this.submitted = false;
-                throw new Error(err.message);
             },
         );
     }

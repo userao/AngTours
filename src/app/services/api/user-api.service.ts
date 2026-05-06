@@ -15,9 +15,9 @@ export class UserApiService {
 
     constructor() {}
 
-    auth(body: IAuthUser): Observable<IAuthUserRes> {
+    auth(body: IAuthUser): Observable<{access_token: string}> {
         this.loaderService.setLoader(true);
-        return this.http.post<IAuthUserRes>(this.api.auth, body).pipe(
+        return this.http.post<{access_token: string}>(this.api.auth, body).pipe(
             delay(1000),
             finalize(() => this.loaderService.setLoader(false)),
         );
