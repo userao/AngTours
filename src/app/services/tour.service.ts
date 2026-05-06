@@ -65,11 +65,11 @@ export class TourService {
         const tours$ = this.toursApi.getTours();
         this.loaderService.setLoader(true);
 
-        return forkJoin<[ICountry[], IToursData]>([countries$, tours$]).pipe(
+        return forkJoin<[ICountry[], ITour[]]>([countries$, tours$]).pipe(
             delay(1000),
             withLatestFrom(this.cartItems$),
             map(([data, cartItems]) => {
-                const [countries, { tours }] = data;
+                const [countries, tours] = data;
                 const countriesMap = new Map();
                 const toursWithCountries = [] as ITour[];
 

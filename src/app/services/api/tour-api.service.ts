@@ -32,11 +32,11 @@ export class TourApiService {
 
     constructor() {}
 
-    getTours(showLoader = false): Observable<IToursData> {
+    getTours(showLoader = false): Observable<ITour[]> {
         if (showLoader) {
             this.loaderService.setLoader(true);
         }
-        return this.http.get<IToursData>(this.api.tours).pipe(
+        return this.http.get<ITour[]>(this.api.tours).pipe(
             delay(2000),
             finalize(() => {
                 if (showLoader) {
