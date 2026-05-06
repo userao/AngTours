@@ -94,7 +94,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
                     409: "Неверный логин или пароль",
                     500: "Ошибка связи с сервером",
                 };
-                this.snackBar.open(errMsgs[err.status], "Закрыть");
+                this.snackBar.open(errMsgs[err.statusCode], "Закрыть");
                 this.submitted = false;
                 throw new Error(err.message);
             },

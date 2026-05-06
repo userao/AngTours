@@ -46,7 +46,7 @@ export class RegistrationComponent {
                 }
 
                 this.snackBar.open(
-                    errMsgs[err.status],
+                    errMsgs[err.statusCode],
                     "Закрыть",
                 );
                 this.submitted = false;
