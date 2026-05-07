@@ -32,10 +32,10 @@ export class HeaderComponent implements OnInit {
             }, 1000),
         );
 
-        const username = this.userService.getUsername();
+        const user = this.userService.getUser();
 
-        if (username) {
-            this.userName = username;
+        if (user) {
+            this.userName = user.login;
         } else {
             this.menuItems.push({ route: "auth", title: "Войти" });
         }

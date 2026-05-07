@@ -55,10 +55,10 @@ export class OrderComponent implements OnInit {
     }
 
     handleSubmit(): void {
-        const username = this.userService.getUsername();
+        const user = this.userService.getUser();
         this.tourService
             .placeOrder({
-                username,
+                username: user.login,
                 fullName: this.name,
                 email: this.email,
                 cardNumber: this.cardNumber,

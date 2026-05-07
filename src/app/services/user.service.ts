@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
+import { IAuthUserRes } from "../models/user";
 
 @Injectable({
     providedIn: "root",
 })
 export class UserService {
     private username: string;
+    private user: IAuthUserRes;
 
     constructor() {
         this.loadUser();
@@ -14,30 +16,26 @@ export class UserService {
         localStorage.setItem("token", token);
     }
 
-    loadUser() {
-        const savedUsername = localStorage.getItem("username");
+    setUser(user: IAuthUserRes) {
+        this.user = user;
+        localStorage.setItem('user', JSON.stringify(this.user));
+    }
 
-        if (savedUsername) {
-            this.username = savedUsername;
+    getUser() {
+        return this.user;
+    }
+
+    loadUser() {
+        const savedUser = localStorage.getItem("user");
+
+        if (savedUser) {
+            this.user = JSON.parse(savedUser);
         }
     }
 
-    saveUsername(username: string): void {
-        this.username = username;
-        localStorage.setItem("username", username);
-    }
-
-    getUsername(): string {
-        return this.username;
-    }
-
-    setUsername(username: string): void {
-        this.username = username;
-    }
-
     logOut() {
-        this.username = null;
-        localStorage.removeItem("username");
+        this.user = null;
+        localStorage.removeItem("user");
         localStorage.removeItem("token");
     }
 }

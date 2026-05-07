@@ -6,6 +6,6 @@ export interface IRegistrationUser extends IAuthUser {
     email?: string;
 }
 
-export interface IAuthUserRes extends IAuthUser {
-    _id: string;
+export interface IAuthUserRes extends Omit<IAuthUser, 'password'> {
+    id: string;
 }
