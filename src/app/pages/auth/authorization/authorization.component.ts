@@ -78,7 +78,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
         };
         this.submitted = true;
         this.userApiService.auth(user).subscribe(
-            (data: {access_token: string}) => {
+            (data: {id: string, access_token: string}) => {
                 if (this.saveInStore.value) {
                     this.userService.saveUsername(user.login);
                 } else {
