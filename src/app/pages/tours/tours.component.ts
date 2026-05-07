@@ -29,6 +29,7 @@ import {
 import { NzNoAnimationModule } from "ng-zorro-antd/core/no-animation";
 import { MapComponent } from "../../shared/components/map/map.component";
 import { Coords, IWeatherData } from "../../models/country";
+import { ServerError } from "../../models/error";
 
 @Component({
     selector: "app-tours",
@@ -66,16 +67,26 @@ export class ToursComponent implements OnInit, AfterViewInit, OnDestroy {
     mapCountryName: string = null;
     location: Coords;
     weatherData: IWeatherData;
+    errorMsg: string = null;
 
     constructor(private cdr: ChangeDetectorRef) {}
 
     private unsubscriber = new Subject<void>();
 
     ngOnInit(): void {
-        this.tourService.getTours().subscribe((data: ITour[]) => {
-            this.allTours = data;
-            this.renderedTours = [...this.allTours];
-        });
+        this.tourService.getTours().subscribe(
+            (data: ITour[]) => {
+                this.allTours = data;
+                this.renderedTours = [...this.allTours];
+            },
+            (err: { error: ServerError }) => {
+               const errMsgs: {[key: number]: string} = {
+                    401: "Войдите для просмотра списка туров",
+               } 
+               const errMsg = errMsgs[err.error.statusCode];
+               this.errorMsg = errMsg;
+            },
+        );
 
         const typeSubscription = this.tourService.tourType$
             .pipe(takeUntil(this.unsubscriber))
@@ -170,19 +181,21 @@ export class ToursComponent implements OnInit, AfterViewInit, OnDestroy {
         this.mapCountryName = tour.country?.name_ru;
 
         e.stopPropagation();
-        
-        this.tourService.getCountryByCode(tour.country.name_en, code).subscribe((data) => {
-            if (data) {
-                const countryInfo = data.countryData;
-                const {latitude, longitude} = countryInfo;
-                
-                this.location = {
-                    latitude,
-                    longitude,
-                };
-                this.weatherData = data.weatherData;
-                this.showModal = true;
-            }
-        });
+
+        this.tourService
+            .getCountryByCode(tour.country.name_en, code)
+            .subscribe((data) => {
+                if (data) {
+                    const countryInfo = data.countryData;
+                    const { latitude, longitude } = countryInfo;
+
+                    this.location = {
+                        latitude,
+                        longitude,
+                    };
+                    this.weatherData = data.weatherData;
+                    this.showModal = true;
+                }
+            });
     };
 }

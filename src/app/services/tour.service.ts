@@ -9,8 +9,8 @@ import {
     forkJoin,
     map,
     Observable,
-    of,
     Subject,
+    throwError,
     withLatestFrom,
 } from "rxjs";
 import { ICountry, ICountryWeather } from "../models/country";
@@ -63,6 +63,7 @@ export class TourService {
     getTours(): Observable<ITour[]> {
         const countries$ = this.toursApi.getCountries();
         const tours$ = this.toursApi.getTours();
+
         this.loaderService.setLoader(true);
 
         return forkJoin<[ICountry[], ITour[]]>([countries$, tours$]).pipe(
@@ -100,8 +101,7 @@ export class TourService {
                 return toursWithCountries;
             }),
             catchError((err) => {
-                console.log(err);
-                return of([]);
+                return throwError(() => err)
             }),
             finalize(() => {
                 this.loaderService.setLoader(false);

@@ -39,3 +39,7 @@
         <app-map [location]="location" />
     </ng-container>
 </nz-modal>
+
+@if(errorMsg) {
+    <div class="mt-5">{{errorMsg}}</div>
+}
