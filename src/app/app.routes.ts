@@ -12,7 +12,7 @@ export const routes: Routes = [
       { path: "", component: ToursComponent },
       { path: "settings", component: SettingsComponent },
       {
-        path: "tour/:id",
+        path: "tours/:id",
         loadComponent: () =>
           import("./pages/tours/tour-item/tour-item.component").then(
             (c) => c.TourItemComponent,

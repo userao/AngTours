@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { TourApiService } from "./api/tour-api.service";
-import { ITour, IToursData, TourTypes } from "../models/tour";
+import { ITour, TourTypes } from "../models/tour";
 import {
     BehaviorSubject,
     catchError,

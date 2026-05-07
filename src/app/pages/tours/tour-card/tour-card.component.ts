@@ -23,15 +23,13 @@ export class TourCardComponent implements OnInit {
     @Input() handleShowModal: (e: Event, tour: ITour, code: string) => void;
 
     ngOnInit(): void {
-        console.log(this.tour);
-        
         if(this.tour.inBasket === undefined) {
             this.tour.inBasket = false;
         }
     }
 
     goToTour(): void {
-        this.router.navigate([`tour/${this.tour.id}`]);
+        this.router.navigate([`tours/${this.tour.id}`]);
     }
 
     handleCart(): void {

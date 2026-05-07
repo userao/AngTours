@@ -22,14 +22,15 @@ export class TourItemComponent implements OnInit {
 
     ngOnInit(): void {
         const id = this.route.snapshot.paramMap.get("id");
-
+        
         const observer: Partial<Observer<ITour>> = {
             next: (tour: ITour) => {
                 this.tour = tour;
-                error: () => {
-                    this.snackBar.open("Ошибка запроса тура", "Закрыть");
-                };
+                console.log(this.tour);
             },
+            error: () => {
+                this.snackBar.open("Ошибка запроса тура", "Закрыть");
+            }
         };
 
         this.tourService.getTour(id).subscribe(observer);

@@ -15,8 +15,8 @@ export interface ITour {
     inBasket?: boolean;
 }
 
-export interface IToursData {
-    tours: Omit<ITour, 'country' | 'inBasket'>[];
+export interface ITourData extends ITour {
+    _id: string;
 }
 
 export type TourTypes = 'all' | 'single' | 'group';

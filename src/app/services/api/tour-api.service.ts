@@ -5,12 +5,13 @@ import {
     catchError,
     delay,
     finalize,
+    from,
     map,
     Observable,
     of,
     switchMap,
 } from "rxjs";
-import { ITour, IToursData } from "../../models/tour";
+import { ITour, ITourData } from "../../models/tour";
 import { LoaderService } from "../loader.service";
 import {
     Coords,
@@ -36,7 +37,14 @@ export class TourApiService {
         if (showLoader) {
             this.loaderService.setLoader(true);
         }
-        return this.http.get<ITour[]>(this.api.tours).pipe(
+        return this.http.get<ITourData[]>(this.api.tours).pipe(
+            switchMap((data) => {
+                const tours = data.map((data) => {
+                    const { _id, ...tour } = { id: data._id, ...data };
+                    return tour as ITour;
+                });
+                return of(tours);
+            }),
             delay(2000),
             finalize(() => {
                 if (showLoader) {
@@ -48,7 +56,12 @@ export class TourApiService {
     }
 
     getTour(id: string): Observable<ITour> {
-        return this.http.get<ITour>(this.api.tour + id);
+        return this.http.get<ITourData>(this.api.tour + id).pipe(
+            map((data) => {
+                const { _id, ...tour } = { id: data._id, ...data };
+                return tour as ITour;
+            }),
+        );
     }
 
     getCountries(showLoader = false): Observable<ICountry[]> {
