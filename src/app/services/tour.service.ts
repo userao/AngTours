@@ -34,6 +34,9 @@ export class TourService {
     private cartItemsSubject = new BehaviorSubject<ITour[]>(this.cart);
     readonly cartItems$ = this.cartItemsSubject.asObservable();
 
+    private tourSubject = new Subject<ITour[]>();
+    readonly tour$ = this.tourSubject.asObservable(); 
+
     tour: ITour;
 
     constructor() {
@@ -41,6 +44,10 @@ export class TourService {
         if (tourString) {
             this.tour = JSON.parse(tourString);
         }
+    }
+
+    updateTourList(data: ITour[]) {
+        this.tourSubject.next(data);
     }
 
     addTourToCart(tour: ITour): void {
@@ -58,6 +65,14 @@ export class TourService {
             tourToRemove.inBasket = false;
             this.cartItemsSubject.next(this.cart);
         }
+    }
+    
+    initTours() {
+       return this.toursApi.initTours();
+    }
+
+    removeTours() {
+        return this.toursApi.removeTours();
     }
 
     getTours(): Observable<ITour[]> {

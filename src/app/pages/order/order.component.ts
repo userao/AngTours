@@ -58,8 +58,8 @@ export class OrderComponent implements OnInit {
         const user = this.userService.getUser();
         this.tourService
             .placeOrder({
-                username: user.login,
-                fullName: this.name,
+                userId: user.id,
+                name: this.name,
                 email: this.email,
                 cardNumber: this.cardNumber,
                 tourId: this.tour.id,

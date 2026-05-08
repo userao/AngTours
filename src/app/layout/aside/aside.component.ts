@@ -11,15 +11,17 @@ import {
     MatDatepickerModule,
 } from "@angular/material/datepicker";
 import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
     selector: "app-aside",
     imports: [
-        MatSelectModule,
-        MatFormField,
-        MatDatepickerModule,
-        MatInputModule,
-    ],
+    MatSelectModule,
+    MatFormField,
+    MatDatepickerModule,
+    MatInputModule,
+    MatButtonModule
+],
     templateUrl: "./aside.component.html",
     styleUrl: "./aside.component.scss",
 })
@@ -38,5 +40,16 @@ export class AsideComponent {
 
     handleDateSelect(e: MatDatepickerInputEvent<Date>): void {
         this.tourService.setTourDate(e.value);
+    }
+
+    handleTourInit() {
+        this.tourService.initTours().subscribe((data) => {
+            this.tourService.updateTourList(data);
+        })
+    }
+    handleTourRemove() {
+        this.tourService.removeTours().subscribe(() => {
+            this.tourService.updateTourList([]);
+        });
     }
 }

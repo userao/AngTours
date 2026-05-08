@@ -88,6 +88,15 @@ export class ToursComponent implements OnInit, AfterViewInit, OnDestroy {
             },
         );
 
+        const toursSubscription = this.tourService.tour$
+            .pipe(takeUntil(this.unsubscriber))
+            .subscribe(tours => {
+                console.log(tours);
+                
+                this.allTours = tours;
+                this.initTourFilterLogic();
+            })
+
         const typeSubscription = this.tourService.tourType$
             .pipe(takeUntil(this.unsubscriber))
             .subscribe((type: TourTypes) => {
@@ -101,7 +110,7 @@ export class ToursComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.dateFilter = date;
                 this.initTourFilterLogic();
             });
-        this.subscriptions.push(typeSubscription, dateSubscription);
+        this.subscriptions.push(typeSubscription, dateSubscription, toursSubscription);
     }
 
     ngOnDestroy(): void {
@@ -165,7 +174,7 @@ export class ToursComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     updateView(): void {
-        setTimeout(() => this.higlightActiveDirective.initItems(), 10);
+        setTimeout(() => this.higlightActiveDirective?.initItems(), 20);
     }
 
     onEnter(e: { el: HTMLElement; index: number }): void {

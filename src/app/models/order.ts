@@ -1,7 +1,7 @@
 export interface IOrder {
-    username: string,
     tourId: string,
-    fullName: string,
+    userId: string,
+    name: string,
     email: string,
     cardNumber: string,
 }

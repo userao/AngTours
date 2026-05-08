@@ -5,8 +5,7 @@ import { IConfig } from "../../models/config";
 const apiData: IConfig = {
     auth: `${environment.server}/users/auth`,
     register: `${environment.server}/users/register`,
-    tours: `${environment.server}/tours`,
-    tour: `${environment.server}/tours/`,
+    tours: `${environment.server}/tours/`,
     countries: `${environment.server}/countries`,
     weather: "https://api.open-meteo.com/v1/forecast",
     countryByCode: "https://geocoding-api.open-meteo.com/v1/search",

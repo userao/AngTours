@@ -55,8 +55,16 @@ export class TourApiService {
         //   return this.http.get("/mocks/tours.json");
     }
 
+    initTours(): Observable<ITour[]> {
+        return this.http.get<ITour[]>(this.api.tours + "generate");
+    }
+
+    removeTours(): Observable<never> {
+        return this.http.delete<never>(this.api.tours);
+    }
+
     getTour(id: string): Observable<ITour> {
-        return this.http.get<ITourData>(this.api.tour + id).pipe(
+        return this.http.get<ITourData>(this.api.tours + id).pipe(
             map((data) => {
                 const { _id, ...tour } = { id: data._id, ...data };
                 return tour as ITour;
