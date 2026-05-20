@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { TourApiService } from "./api/tour-api.service";
-import { ITour, TourTypes } from "../models/tour";
+import { ITour, ITourData, ITourUpload, TourTypes } from "../models/tour";
 import {
     BehaviorSubject,
     catchError,
@@ -151,5 +151,9 @@ export class TourService {
 
     placeOrder(order: IOrder): Observable<IOrder> {
         return this.toursApi.postOrder(order);
+    }
+
+    uploadTour(tour: ITourUpload): Observable<ITourData> {
+        return this.toursApi.uploadTour(tour);
     }
 }

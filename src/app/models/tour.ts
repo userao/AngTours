@@ -7,7 +7,7 @@ export interface ITour {
     tourOperator: string;
     price: string;
     img: string;
-    locationId: string;
+    locationId?: string;
     type?: string;
     date?: string;
     code?: string;
@@ -19,9 +19,11 @@ export interface ITourData extends ITour {
     _id: string;
 }
 
-export type TourTypes = 'all' | 'single' | 'group';
+export type ITourUpload = Omit<ITour, "id">;
+
+export type TourTypes = "all" | "single" | "group";
 
 export interface IFilterTypeLogic {
-    key: TourTypes,
-    label?: string
+    key: TourTypes;
+    label?: string;
 }

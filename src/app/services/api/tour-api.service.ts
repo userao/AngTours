@@ -11,7 +11,7 @@ import {
     of,
     switchMap,
 } from "rxjs";
-import { ITour, ITourData } from "../../models/tour";
+import { ITour, ITourData, ITourUpload } from "../../models/tour";
 import { LoaderService } from "../loader.service";
 import {
     Coords,
@@ -32,6 +32,10 @@ export class TourApiService {
     private api = inject(API);
 
     constructor() {}
+
+    uploadTour(tour: ITourUpload): Observable<ITourData> {
+        return this.http.post<ITourData>(this.api.tours, tour);
+    }
 
     getTours(showLoader = false): Observable<ITour[]> {
         if (showLoader) {
