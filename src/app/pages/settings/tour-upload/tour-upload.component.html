@@ -1,0 +1,28 @@
+<form
+    [formGroup]="tourForm"
+    (ngSubmit)="handleSubmit()"
+    class="w-50 mx-auto mt-5 "
+>
+    <mat-form-field class="d-block">
+        <mat-label>Название тура</mat-label>
+        <input matInput formControlName="title" />
+    </mat-form-field>
+    <mat-form-field class="d-block">
+        <mat-label>Описание</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+    <mat-form-field class="d-block">
+        <mat-label>Туроператор</mat-label>
+        <input matInput formControlName="operator" />
+    </mat-form-field>
+    <mat-form-field class="d-block">
+        <mat-label>Цена</mat-label>
+        <input matInput formControlName="price" />
+    </mat-form-field>
+    <mat-form-field class="d-block">
+        <input matInput formControlName="image" type="file" accept="image/*"/>
+    </mat-form-field>
+    <div class="d-flex">
+        <button mat-button type="submit" class="mx-auto">Загрузить</button>
+    </div>
+</form>
