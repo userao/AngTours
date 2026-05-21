@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { TourService } from "../../../services/tour.service";
 import { NgClass } from "@angular/common";
 import { MatIconModule } from "@angular/material/icon";
+import { API } from "../../../shared/api";
 
 @Component({
     selector: "app-tour-card",
@@ -19,6 +20,7 @@ import { MatIconModule } from "@angular/material/icon";
 export class TourCardComponent implements OnInit {
     private router = inject(Router);
     private tourService = inject(TourService);
+    api = inject(API);
     @Input() tour: ITour;
     @Input() handleShowModal: (e: Event, tour: ITour, code: string) => void;
 

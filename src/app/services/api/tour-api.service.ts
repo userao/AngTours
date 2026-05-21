@@ -33,7 +33,7 @@ export class TourApiService {
 
     constructor() {}
 
-    uploadTour(tour: ITourUpload): Observable<ITourData> {
+    uploadTour(tour: FormData): Observable<ITourData> {
         return this.http.post<ITourData>(this.api.tours, tour);
     }
 

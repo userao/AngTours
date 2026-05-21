@@ -1,3 +1,5 @@
+@let imageUrl = `${api.public}/${tour.img}`;
+
 <mat-card appearance="outlined">
     <div class="h-100 d-flex flex-column justify-content-between">
         <div>
@@ -5,7 +7,7 @@
                 <mat-card-title>{{ tour.name }}</mat-card-title>
                 <mat-card-subtitle>{{ tour.tourOperator }}</mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image src="/img/{{ tour.img }}" />
+            <img mat-card-image [src]="imageUrl" />
             <mat-card-content class="pb-0">
                 <p>
                     {{ tour.description }}

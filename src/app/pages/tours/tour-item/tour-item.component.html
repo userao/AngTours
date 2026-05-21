@@ -1,4 +1,6 @@
 @if (tour) {
+    @let imageUrl = `${api.public}/${tour.img}`;
+
     <div class="tour__content">
         <h2 class="tour__name">{{ tour.name }}</h2>
         <h3 class="tour__operator">{{ tour.tourOperator }}</h3>
@@ -8,6 +10,6 @@
         <a mat-button (click)="handleOrder()">Сформировать заказ</a>
     </div>
     <div class="tour__image">
-        <img src="img/{{ tour.img }}" />
+        <img [src]="imageUrl" />
     </div>
 }

@@ -6,7 +6,7 @@ export interface ITour {
     description: string;
     tourOperator: string;
     price: string;
-    img: string;
+    img: Blob;
     locationId?: string;
     type?: string;
     date?: string;
@@ -19,7 +19,7 @@ export interface ITourData extends ITour {
     _id: string;
 }
 
-export type ITourUpload = Omit<ITour, "id">;
+export type ITourUpload = Pick<ITour, 'name' | 'description' | 'tourOperator' | 'price' | 'img'>;
 
 export type TourTypes = "all" | "single" | "group";
 

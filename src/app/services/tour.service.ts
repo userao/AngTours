@@ -153,7 +153,7 @@ export class TourService {
         return this.toursApi.postOrder(order);
     }
 
-    uploadTour(tour: ITourUpload): Observable<ITourData> {
+    uploadTour(tour: FormData): Observable<ITourData> {
         return this.toursApi.uploadTour(tour);
     }
 }

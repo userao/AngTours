@@ -22,17 +22,28 @@ export class TourUploadComponent {
     });
 
     handleSubmit() {
-        const formData = this.tourForm.getRawValue();
-        const tour = {
-            name: formData.title,
-            description: formData.description,
-            tourOperator: formData.operator,
-            price: formData.price,
-            img: formData.image,
-        } as ITourUpload;
+        const formValues = this.tourForm.getRawValue();
+        const formData = new FormData();
+        const tour: ITourUpload = {
+            name: formValues.title,
+            description: formValues.description,
+            tourOperator: formValues.operator,
+            price: formValues.price,
+            img: formValues.image,
+        };
 
-        this.tourService.uploadTour(tour).subscribe((data) => {
+        for(let key in tour) {
+            formData.append(key, tour[key as keyof ITourUpload])
+        }
+        
+        this.tourService.uploadTour(formData).subscribe((data) => {
             console.log(data);
         });
+    }
+
+    onFileSelect(e: any) {
+        if (e.target.files.length > 0) {
+            this.tourForm.patchValue({image: e.target.files[0]})
+        }
     }
 }

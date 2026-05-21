@@ -20,7 +20,7 @@
         <input matInput formControlName="price" />
     </mat-form-field>
     <mat-form-field class="d-block">
-        <input matInput formControlName="image" type="file" accept="image/*"/>
+        <input matInput formControlName="image" type="file" accept="image/*" (change)="onFileSelect($event)"/>
     </mat-form-field>
     <div class="d-flex">
         <button mat-button type="submit" class="mx-auto">Загрузить</button>

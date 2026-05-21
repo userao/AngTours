@@ -6,6 +6,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { Observer } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
+import { API } from "../../../shared/api";
 
 @Component({
     selector: "app-tour-item",
@@ -18,6 +19,7 @@ export class TourItemComponent implements OnInit {
     private router = inject(Router);
     private tourService = inject(TourService);
     private snackBar = inject(MatSnackBar);
+    api = inject(API);
     tour: ITour = null;
 
     ngOnInit(): void {
